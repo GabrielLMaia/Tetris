@@ -15,8 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.ImageIcon;
+
+import java.awt.Component;
+
+import javax.swing.Box;
 
 public class Principal extends JFrame {
 
@@ -46,7 +53,7 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
-	
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		telas = new JPanel();
 		setBounds(100,100,500,500);
@@ -58,59 +65,76 @@ public class Principal extends JFrame {
 		telas.add(inicial, "tela inicial");
 		
 		JLabel Titulo = new JLabel("Tetris");
+		Titulo.setBounds(0, 74, 484, 72);
 		Titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		Titulo.setFont(new Font("Tahoma", Font.PLAIN, 59));
 		Titulo.setForeground(Color.WHITE);
 		
 		JLabel Iniciar = new JLabel("Iniciar");
+		Iniciar.setBounds(208, 227, 50, 14);
 		Iniciar.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				 ((CardLayout) telas.getLayout()).show(telas, "tetris");
-				 setSize(500, 600);
+				 ((CardLayout) telas.getLayout()).show(telas, "jogo");
+				 setSize(676, 639);
 				 setLocationRelativeTo(null);
 			}
 		});
 		Iniciar.setForeground(Color.WHITE);
 		
 		JLabel Config = new JLabel("Configura\u00E7\u00F5es");
+		Config.setBounds(208, 253, 97, 14);
 		Config.setForeground(Color.WHITE);
-		GroupLayout gl_inicial = new GroupLayout(inicial);
-		gl_inicial.setHorizontalGroup(
-			gl_inicial.createParallelGroup(Alignment.TRAILING)
-				.addComponent(Titulo, GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
-				.addGroup(gl_inicial.createSequentialGroup()
-					.addGap(224)
-					.addComponent(Iniciar)
-					.addContainerGap(223, Short.MAX_VALUE))
-				.addGroup(gl_inicial.createSequentialGroup()
-					.addContainerGap(203, Short.MAX_VALUE)
-					.addComponent(Config)
-					.addGap(198))
-		);
-		gl_inicial.setVerticalGroup(
-			gl_inicial.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_inicial.createSequentialGroup()
-					.addGap(74)
-					.addComponent(Titulo)
-					.addGap(81)
-					.addComponent(Iniciar)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(Config)
-					.addContainerGap(183, Short.MAX_VALUE))
-		);
-		inicial.setLayout(gl_inicial);
+		inicial.setLayout(null);
+		inicial.add(Titulo);
+		inicial.add(Iniciar);
+		inicial.add(Config);
+		
+		JLabel lblVaiSeFuder = new JLabel("Vai se fuder");
+		lblVaiSeFuder.setForeground(Color.WHITE);
+		lblVaiSeFuder.setBounds(208, 278, 91, 14);
+		inicial.add(lblVaiSeFuder);
 		Tetris tetris =new Tetris();
-	
-		telas.add(tetris, "tetris");
+		tetris.setBounds(180, 0, 300, 600);
+		final Controle c=new Controle();
+//		telas.add(tetris, "tetris");
 		JPanel gameover = new JPanel();
 		telas.add(gameover, "game over");
-		
 		JPanel teste = new JPanel();
 		telas.add(teste, "name_22404026101542");
 		teste.setLayout(new GridLayout(16, 10, 1, 1));		
 		
+		JPanel jogo = new JPanel();
+		telas.add(jogo, "jogo");
+		jogo.setLayout(null);
+		jogo.add(tetris);
+		
+		JLabel aux = new JLabel("");
+		 aux.setIcon(new ImageIcon(Principal.class.getResource("/imagens/HOLD.png")));
+		 aux.setBounds(0, 0, 150, 150);
+		jogo.add( aux);
+		
+		JLabel divE = new JLabel("");
+		divE.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Div.png")));
+		divE.setBounds(150, 0, 30, 600);
+		jogo.add(divE);
+		
+		JLabel divD = new JLabel("");
+		divD.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Div.png")));
+		divD.setBounds(480, 0, 30, 600);
+		jogo.add(divD);
+//		JLabel test= new JLabel("");
+//		test.setIcon(new ImageIcon(Principal.class.getResource("/imagens/AR.png")));
+//		 test.setBounds(520, 100, 30, 30);
+//		 test.transferFocusUpCycle();
+//		jogo.add( test);
+		JLabel list = new JLabel("");
+		 list.setIcon(new ImageIcon(Principal.class.getResource("/imagens/List.png")));
+		 list.setBounds(510, 0, 150, 600);
+		jogo.add( list);
+		Controle C=new Controle();
+		this.addKeyListener(C);
 						
 		
 	}

@@ -38,7 +38,7 @@ public class Lista<T> {
 	public void remT(){
 		if(tam!=0){
 		if(head==tail){
-			head=null;
+			head=null;	
 			tail=null;
 		}else{
 			No<T> aux=head;
