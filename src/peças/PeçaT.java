@@ -1,118 +1,38 @@
 package peças;
-
-import jogo.Tetris;
-
 public class PeçaT extends Peça {
 
-	public PeçaT(int pex, int pey) {
-		super();
-		centralx = pex;
-		centraly = pey;
-		pintar();
-
+	public PeçaT(int coorX, int coorY, Bloco[][] matrizBlocos) {
+		super(coorX,coorY,matrizBlocos);
 	}
-
-	String f = "oi";
-
-	public boolean podePintar() {
-		switch (s) {
-		case NORMAL:
-
-			if (Tetris.blocos[centralx][centraly].colidir(this)
-					|| Tetris.blocos[centralx - 1][centraly].colidir(this)
-					|| Tetris.blocos[centralx][centraly - 1].colidir(this)
-					|| Tetris.blocos[centralx][centraly + 1].colidir(this))
-				return false;
-
-			return true;
-		case DIREIRA:
-			if (Tetris.blocos[centralx][centraly].colidir(this)
-					|| Tetris.blocos[centralx - 1][centraly].colidir(this)
-					|| Tetris.blocos[centralx + 1][centraly].colidir(this)
-					|| Tetris.blocos[centralx][centraly + 1].colidir(this))
-				return false;
-			return true;
-		case BAIXO:
-			if (Tetris.blocos[centralx][centraly].colidir(this)
-					|| Tetris.blocos[centralx + 1][centraly].colidir(this)
-					|| Tetris.blocos[centralx][centraly - 1].colidir(this)
-					|| Tetris.blocos[centralx][centraly + 1].colidir(this))
-				return false;
-			return true;
-		case ESQUERDA:
-			if (Tetris.blocos[centralx][centraly].colidir(this)
-					|| Tetris.blocos[centralx - 1][centraly].colidir(this)
-					|| Tetris.blocos[centralx + 1][centraly].colidir(this)
-					|| Tetris.blocos[centralx][centraly - 1].colidir(this))
-				return false;
-			return true;
-
-		}
-		return false;
-	}
-
-	public void pintar() {
-		switch (s) {
-		case NORMAL:
-			Tetris.blocos[centralx][centraly].criar(icon, this);
-			Tetris.blocos[centralx - 1][centraly].criar(icon, this);
-			Tetris.blocos[centralx][centraly - 1].criar(icon, this);
-			Tetris.blocos[centralx][centraly + 1].criar(icon, this);
+	
+	public void AtualizarBlocosDaPeça(){
+		switch(rotação){
+		case NORMAL:			
+			blocosDaPeça[0]= matrizLocal[coorCentralX][coorCentralY];
+			blocosDaPeça[1]=matrizLocal[coorCentralX - 1][coorCentralY];
+			blocosDaPeça[2]=matrizLocal[coorCentralX][coorCentralY - 1];
+			blocosDaPeça[3]=matrizLocal[coorCentralX][coorCentralY + 1];
 			break;
 		case DIREIRA:
-			Tetris.blocos[centralx][centraly].criar(icon, this);
-			Tetris.blocos[centralx - 1][centraly].criar(icon, this);
-			Tetris.blocos[centralx + 1][centraly].criar(icon, this);
-			Tetris.blocos[centralx][centraly + 1].criar(icon, this);
+			blocosDaPeça[0]= matrizLocal[coorCentralX][coorCentralY];
+			blocosDaPeça[1]=matrizLocal[coorCentralX - 1][coorCentralY];
+			blocosDaPeça[2]=matrizLocal[coorCentralX + 1][coorCentralY];
+			blocosDaPeça[3]=matrizLocal[coorCentralX][coorCentralY + 1];
 			break;
 		case BAIXO:
-			Tetris.blocos[centralx][centraly].criar(icon, this);
-			Tetris.blocos[centralx + 1][centraly].criar(icon, this);
-			Tetris.blocos[centralx][centraly - 1].criar(icon, this);
-			Tetris.blocos[centralx][centraly + 1].criar(icon, this);
+			blocosDaPeça[0]= matrizLocal[coorCentralX][coorCentralY];
+			blocosDaPeça[1]=matrizLocal[coorCentralX + 1][coorCentralY];
+			blocosDaPeça[2]=matrizLocal[coorCentralX][coorCentralY - 1];
+			blocosDaPeça[3]=matrizLocal[coorCentralX][coorCentralY + 1];
 			break;
 		case ESQUERDA:
-			Tetris.blocos[centralx][centraly].criar(icon, this);
-			Tetris.blocos[centralx - 1][centraly].criar(icon, this);
-			Tetris.blocos[centralx][centraly - 1].criar(icon, this);
-			Tetris.blocos[centralx + 1][centraly].criar(icon, this);
+			blocosDaPeça[0]= matrizLocal[coorCentralX][coorCentralY];
+			blocosDaPeça[1]=matrizLocal[coorCentralX - 1][coorCentralY];
+			blocosDaPeça[2]=matrizLocal[coorCentralX + 1][coorCentralY];
+			blocosDaPeça[3]=matrizLocal[coorCentralX][coorCentralY - 1];
 			break;
-
-		}
-
-	}
-
-	public void apagar() {
-		switch (s) {
-		case NORMAL:
-			Tetris.blocos[centralx][centraly].limpar();
-			Tetris.blocos[centralx - 1][centraly].limpar();
-			Tetris.blocos[centralx][centraly - 1].limpar();
-			Tetris.blocos[centralx][centraly + 1].limpar();
-			break;
-		case DIREIRA:
-			Tetris.blocos[centralx][centraly].limpar();
-			Tetris.blocos[centralx - 1][centraly].limpar();
-			Tetris.blocos[centralx + 1][centraly].limpar();
-			Tetris.blocos[centralx][centraly + 1].limpar();
-			break;
-		case BAIXO:
-			Tetris.blocos[centralx][centraly].limpar();
-			Tetris.blocos[centralx + 1][centraly].limpar();
-			Tetris.blocos[centralx][centraly - 1].limpar();
-			Tetris.blocos[centralx][centraly + 1].limpar();
-			break;
-		case ESQUERDA:
-			Tetris.blocos[centralx][centraly].limpar();
-			Tetris.blocos[centralx - 1][centraly].limpar();
-			Tetris.blocos[centralx][centraly - 1].limpar();
-			Tetris.blocos[centralx + 1][centraly].limpar();
-			break;
-
+			
 		}
 	}
-
 }
-// +
-// +*+
-//     
+    

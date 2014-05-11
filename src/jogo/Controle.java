@@ -7,7 +7,7 @@ import peças.*;
 
 public class Controle implements KeyListener {
 
-	PeçaJ L=new PeçaJ(1,4);
+
 //	PeçaT y=new PeçaT(10,8); 
 //	PeçaT g=new PeçaT(5,2);
 //	PeçaT f=new PeçaT(7,2);
@@ -23,16 +23,17 @@ public class Controle implements KeyListener {
 switch(k.getKeyCode()){
 		
 		case KeyEvent.VK_DOWN:
-			L.descer();
+			Tetris.peçaAtual.descer();
+			Tetris.checarLinhas();
 			break;
 		case KeyEvent.VK_RIGHT:
-			L.direita();
+			Tetris.peçaAtual.direita();
 			break;
 		case KeyEvent.VK_LEFT:
-			L.esquerda();
+			Tetris.peçaAtual.esquerda();
 			break;
 		case KeyEvent.VK_SPACE:
-			L.harddrop();
+			Tetris.peçaAtual.harddrop();
 			break;
 		}
 		
@@ -43,7 +44,7 @@ switch(k.getKeyCode()){
 	@Override
 	public void keyReleased(KeyEvent k) {
 		if(k.getKeyCode()==KeyEvent.VK_UP)
-			L.girar();
+			Tetris.peçaAtual.girar();
 
 	}
 

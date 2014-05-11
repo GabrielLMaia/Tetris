@@ -2,35 +2,29 @@ package peças;
 
 import java.awt.Color;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import jogo.*;
 public class Bloco {
-	private Peça p;
+	private Peça peça;
 	private JLabel bloco;
 	private boolean vazio;
-	private int coorx;
-	private int coory;
-	public Bloco[][] b;
-	public Bloco(int x,int y,Bloco[][] b){
-		this.b=b;
-		b[x][y]=this;
+	private class Coor{
+	     int x; 
+	     int y;   
+	 };
+	Coor coor=new Coor();
+	public Bloco[][] matrizBlocos;
+	public Bloco(int x,int y,Bloco[][] matriz){
+		this.matrizBlocos=matriz;
+		matrizBlocos[x][y]=this;
+		coor.x=x;
+		coor.y=y;
 		setBloco(new JLabel());
 		getBloco().setOpaque(true);
 		getBloco().setBackground(Color.black);
-//		Tetris.blocos[x][y]=this;
-		this.coorx=x;
-		this.coory=y;
 		setVazio(true);
 	}
-	public void teste(PeçaT p){
-		this.p=p;
-		System.out.println(p.f);
-	
-	}
-	public boolean colidir(Peça p){
-		if(isVazio()||this.p==p){
+	public boolean colidir(Peça peça){
+		if(isVazio()||this.peça==peça){
 			return false;
 		}
 		return true;
@@ -38,29 +32,26 @@ public class Bloco {
 	public void limpar(){
 		getBloco().setIcon(null);
 		setVazio(true);
-		p=null;
+		peça=null;
 	}
-//	public void mover(int x,int y){
-//		b[coorx+x][coory+y].getBloco().setIcon(b[coorx][coory].getBloco().getIcon());
-//		b[coorx+x][coory+y].setVazio(true);
-//		limpar(b[coorx][coory]);
-//		coorx=coorx+x;
-//		coory=coory+y;
+	
+//	public boolean podeMover(int x,int y){
+//		if(matrizBlocos[coor.x+x][coor.y+y].colidi(this))
+//			return true;
+//		return false;
 //	}
-//	public void moverB(){
-//		mover(-1,0);
+	
+//	public boolean podeDescer(){
+//		return podeMover(-1,0);
 //	}
-//	public void moverE(){
-//		mover(0,-1);
-//	}
-//	public void moverD(){
-//		mover(0,+1);
-//	}
-	public void criar(ImageIcon icon,Peça p){
-		getBloco().setIcon(icon);
-		this.p=p;
+
+	public void criar(Peça peça){
+		getBloco().setIcon(peça.icon);
+		this.peça=peça;
 		setVazio(false);
 	}
+	
+	
 	public JLabel getBloco() {
 		return bloco;
 	}
@@ -74,19 +65,4 @@ public class Bloco {
 		this.vazio = vazio;
 	}
 
-	public int getCoorx() {
-		return coorx;
-	}
-
-	public void setCoorx(int coorx) {
-		this.coorx = coorx;
-	}
-
-	public int getCoory() {
-		return coory;
-	}
-
-	public void setCoory(int coory) {
-		this.coory = coory;
-	}
 }

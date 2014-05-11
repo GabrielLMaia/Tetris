@@ -1,16 +1,18 @@
 package jogo;
-import peças.*;
-
-import java.awt.Panel;
+import javax.swing.JPanel;
 
 import lista.Lista;
-import peças.Peça;
-public class ListaPeças extends Panel {
+import peças.*;
+public class ListaPeças extends JPanel {
 	private static final long serialVersionUID = 1L;
-	Lista<Peça> lista=new Lista<Peça>();
-	char[]bag=new char[]{'t','l','s','z','o','j','i'};
-
-	public void gerarPecas(){
+	
+	private Lista<Peça> lista=new Lista<Peça>();
+	private char[]bag=new char[]{'t','l','s','z','o','j','i'};
+	private boolean[] repetido=new boolean[7];
+	public ListaPeças(){
+		
+	}
+	public void gerarPeca(){
 		
 		
 		
