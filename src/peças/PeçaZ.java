@@ -1,7 +1,8 @@
 package peças;
-public class PeçaZ
-extends Peça {
-
+public class PeçaZ extends Peça {
+	public PeçaZ(){
+		super();
+	}
 	public PeçaZ(int coorX, int coorY, Bloco[][] matrizBlocos) {
 		super(coorX,coorY,matrizBlocos);
 	}

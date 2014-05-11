@@ -18,15 +18,23 @@ public class Peça {
 	protected Bloco[] blocosDaPeça = new Bloco[4];
 	public Bloco[][] matrizLocal;
 	sentido rotação;
-
-	public Peça(int coorX, int coorY, Bloco[][] matrizBlocos) {
-		matrizLocal = matrizBlocos;
+	public Peça(){
 		rotação = sentido.NORMAL;
 		gerarCor();
+	}
+	public Peça(int coorX, int coorY, Bloco[][] matrizBlocos) {
+//		super();
+		rotação = sentido.NORMAL;
+		gerarCor();
+		matrizLocal = matrizBlocos;
 		setCoor(coorX, coorY);
 		pintar();
 	}
-	
+	public void criar(int coorX, int coorY, Bloco[][] matrizBlocos){
+		matrizLocal = matrizBlocos;
+		setCoor(coorX, coorY);
+		pintar();
+	}
 	
 	public void descer() {
 		if (podeDescer()) {

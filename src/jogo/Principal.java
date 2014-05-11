@@ -33,9 +33,9 @@ public class Principal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel telas;
 	private static final int LARGURA_TELA_JOGO=600;
-	private static final int LARGURA_REAL_TELA_JOGO=LARGURA_TELA_JOGO+76;
+	private static final int LARGURA_REAL_TELA_JOGO=LARGURA_TELA_JOGO+39;
 	private static final int COMPRIMENTO_TELA_JOGO=600;
-	private static final int COMPRIMENTO_REAL_TELA_JOGO=COMPRIMENTO_TELA_JOGO+39;
+	private static final int COMPRIMENTO_REAL_TELA_JOGO=COMPRIMENTO_TELA_JOGO+76;
 	/**
 	 * Launch the application.
 	 */
@@ -80,7 +80,7 @@ public class Principal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				 ((CardLayout) telas.getLayout()).show(telas, "jogo");
-				 setSize(COMPRIMENTO_REAL_TELA_JOGO, 639);
+				 setSize(COMPRIMENTO_REAL_TELA_JOGO, LARGURA_REAL_TELA_JOGO);
 				 setLocationRelativeTo(null);
 			}
 		});
@@ -99,7 +99,7 @@ public class Principal extends JFrame {
 		lblVaiSeFuder.setBounds(208, 278, 91, 14);
 		inicial.add(lblVaiSeFuder);
 		Tetris tetris =new Tetris();
-		tetris.setBounds(180, 0, 300, 600);
+		tetris.setBounds(180, 0, 300, LARGURA_TELA_JOGO);
 //		telas.add(tetris, "tetris");
 		JPanel gameover = new JPanel();
 		telas.add(gameover, "game over");
@@ -126,11 +126,16 @@ public class Principal extends JFrame {
 		divD.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Div.png")));
 		divD.setBounds(480, 0, 30, 600);
 		jogo.add(divD);
-
-		JLabel list = new JLabel("");
-		 list.setIcon(new ImageIcon(Principal.class.getResource("/imagens/List.png")));
-		 list.setBounds(510, 0, 150, 600);
-		jogo.add( list);
+		
+		ListaPeças lista =new ListaPeças();
+		 lista.setBounds(510,0 , 150, 600);
+		jogo.add( lista);
+		lista.setBackground(Color.GREEN);
+		
+//		JLabel imagemLista = new JLabel("");
+//		imagemLista.setIcon(new ImageIcon(Principal.class.getResource("/imagens/List.png")));
+//		imagemLista.setBounds(510,0,150,600);
+//		jogo.add(imagemLista);
 		Controle C=new Controle();
 		this.addKeyListener(C);			
 		

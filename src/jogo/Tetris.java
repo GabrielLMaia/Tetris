@@ -22,7 +22,7 @@ public class Tetris extends JPanel {
 	
 	public static int intervalo =2000;
 	public static Bloco[][] blocos=new Bloco[LARGURA_REAL][COMPRIMENTO_REAL];
-	public static PeçaZ peçaAtual;
+	public static PeçaT peçaAtual;
 	public static PeçaT peçaSombra;
 	
 	public Tetris(){		
@@ -39,9 +39,12 @@ public class Tetris extends JPanel {
 			}
 		}
 
-		peçaAtual=new PeçaZ(5,5,blocos);
+		peçaAtual=new PeçaT();
+		peçaAtual.criar(5,5,blocos);
 		PeçaI t=new PeçaI(FIM_LINHA,INICIO_COLUNA+1,blocos);
 		PeçaI te=new PeçaI(FIM_LINHA,INICIO_COLUNA+5,blocos);
+		PeçaI tA=new PeçaI(FIM_LINHA-1,INICIO_COLUNA+1,blocos);
+		PeçaI teA=new PeçaI(FIM_LINHA-1,INICIO_COLUNA+5,blocos);
 	
 	}
 	
@@ -71,13 +74,15 @@ public class Tetris extends JPanel {
 			for (int j = INICIO_COLUNA; j <= FIM_COLUNA; j++) {
 				if(!blocos[i][j].isVazio()){
 					numDeBlocosLinha++;
+//					System.out.println(i+" "+numDeBlocosLinha);
 				}
 			}
-			if(inicio!=0){
+			if(inicio==-1){
 				if(numDeBlocosLinha==COMPRIMENTO)
 					inicio=i;
 			}else
 			if(numDeBlocosLinha!=COMPRIMENTO){
+				System.out.println("oi");
 				fim=i-1;
 				break;
 			}
@@ -86,6 +91,7 @@ public class Tetris extends JPanel {
 		if(fim==-1)
 			fim=FIM_LINHA;
 		if(inicio!=-1){
+			System.out.println(inicio +" "+fim);
 			eliminarLinhas(inicio, fim);
 			return inicio;
 		}

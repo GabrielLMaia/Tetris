@@ -1,6 +1,9 @@
 package peças;
 public class PeçaT extends Peça {
 
+	public PeçaT(){
+		super();
+	}
 	public PeçaT(int coorX, int coorY, Bloco[][] matrizBlocos) {
 		super(coorX,coorY,matrizBlocos);
 	}

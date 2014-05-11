@@ -34,6 +34,7 @@ switch(k.getKeyCode()){
 			break;
 		case KeyEvent.VK_SPACE:
 			Tetris.peçaAtual.harddrop();
+			Tetris.checarLinhas();
 			break;
 		}
 		
