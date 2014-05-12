@@ -31,6 +31,8 @@ public class Peça {
 		pintar();
 	}
 	public void criar(int coorX, int coorY, Bloco[][] matrizBlocos){
+		coorCentralX=0;
+		coorCentralY=0;
 		matrizLocal = matrizBlocos;
 		setCoor(coorX, coorY);
 		pintar();
@@ -145,34 +147,36 @@ public class Peça {
 				apagar();
 				rotacionar();
 				pintar();
-			} else {
-				setCoor(-1, 0);
-				if(podeGirar()){
-					setCoor(+1, 0);
-					apagar();
-					setCoor(-1, 0);
-					rotacionar();
-					pintar();
-				}else
-					setCoor(+1, 0);
-			}
+			} 
+//			else {
+//				setCoor(-1, 0);
+//				if(podeGirar()){
+//					setCoor(+1, 0);
+//					apagar();
+//					setCoor(-1, 0);
+//					rotacionar();
+//					pintar();
+//				}else
+//					setCoor(+1, 0);
+//			}
 			break;
 		case DIREIRA:
 			if (podeGirar()) {
 				apagar();
 				rotacionar();
 				pintar();
-			} else {
-				setCoor(0,1);
-				if(podeGirar()){
-					setCoor(0,-1);
-					apagar();
-					setCoor(0,1);
-					rotacionar();
-					pintar();
-				}else
-				setCoor(0,-1);
 			}
+//			else {
+//				setCoor(0,1);
+//				if(podeGirar()){
+//					setCoor(0,-1);
+//					apagar();
+//					setCoor(0,1);
+//					rotacionar();
+//					pintar();
+//				}else
+//				setCoor(0,-1);
+//			}
 			break;
 		case BAIXO:
 			if (podeGirar()) {
@@ -186,17 +190,18 @@ public class Peça {
 				apagar();
 				rotacionar();
 				pintar();
-			} else {
-				setCoor(0,-1);
-				if(podeGirar()){
-					setCoor(0,1);
-					apagar();
-					setCoor(0,-1);
-					rotacionar();
-					pintar();
-				}else
-				setCoor(0,1);
-			}
+			} 
+//			else {
+//				setCoor(0,-1);
+//				if(podeGirar()){
+//					setCoor(0,1);
+//					apagar();
+//					setCoor(0,-1);
+//					rotacionar();
+//					pintar();
+//				}else
+//				setCoor(0,1);
+//			}
 			break;
 
 		}

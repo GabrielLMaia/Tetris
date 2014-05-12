@@ -34,16 +34,13 @@ public class Bloco {
 		setVazio(true);
 		peça=null;
 	}
-	
-//	public boolean podeMover(int x,int y){
-//		if(matrizBlocos[coor.x+x][coor.y+y].colidi(this))
-//			return true;
-//		return false;
-//	}
-	
-//	public boolean podeDescer(){
-//		return podeMover(-1,0);
-//	}
+	 
+    public void descer(int vezes){
+    	matrizBlocos[coor.x+vezes][coor.y].getBloco().setIcon(this.getBloco().getIcon());
+    	matrizBlocos[coor.x+vezes][coor.y].setVazio(isVazio());
+    	matrizBlocos[coor.x+vezes][coor.y].peça=this.peça;
+    	limpar();
+    } 
 
 	public void criar(Peça peça){
 		getBloco().setIcon(peça.icon);
