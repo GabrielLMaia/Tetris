@@ -7,7 +7,7 @@ public class Controle implements KeyListener {
 
 	public void keyPressed(KeyEvent k) {
 		switch (k.getKeyCode()) {
-
+		
 		case KeyEvent.VK_DOWN:
 			Tetris.peçaAtual.descer();
 			break;
@@ -19,6 +19,10 @@ public class Controle implements KeyListener {
 			break;
 		case KeyEvent.VK_SPACE:
 			Tetris.peçaAtual.harddrop();
+			Tetris.jogo();
+			break;
+		case KeyEvent.VK_G:
+			Tetris.gravidade();
 			break;
 		case KeyEvent.VK_P:
 			if (Tetris.pause) {
@@ -27,8 +31,8 @@ public class Controle implements KeyListener {
 			} else {
 				Tetris.pause = true;
 				Tetris.timer.stop();
-				break;
 			}
+			break;
 		case KeyEvent.VK_SHIFT:
 			if(!Tetris.usouHold){
 				Hold.hold();

@@ -18,26 +18,30 @@ public class Peça {
 	protected Bloco[] blocosDaPeça = new Bloco[4];
 	public Bloco[][] matrizLocal;
 	sentido rotação;
-	public Peça(){
+
+	public Peça() {
 		rotação = sentido.NORMAL;
 		gerarCor();
 	}
+
 	public Peça(int coorX, int coorY, Bloco[][] matrizBlocos) {
-//		super();
+		// super();
 		rotação = sentido.NORMAL;
 		gerarCor();
 		matrizLocal = matrizBlocos;
 		setCoor(coorX, coorY);
 		pintar();
 	}
-	public void criar(int coorX, int coorY, Bloco[][] matrizBlocos){
-		coorCentralX=0;
-		coorCentralY=0;
+
+	public void criar(int coorX, int coorY, Bloco[][] matrizBlocos) {
+		rotação = sentido.NORMAL;
+		coorCentralX = 0;
+		coorCentralY = 0;
 		matrizLocal = matrizBlocos;
 		setCoor(coorX, coorY);
 		pintar();
 	}
-	
+
 	public void descer() {
 		if (podeDescer()) {
 			apagar();
@@ -49,7 +53,7 @@ public class Peça {
 	public void esquerda() {
 		if (podeIrEsquerda()) {
 			apagar();
-			setCoor(0,-1);
+			setCoor(0, -1);
 			pintar();
 		}
 	}
@@ -57,38 +61,38 @@ public class Peça {
 	public void direita() {
 		if (podeIrDireita()) {
 			apagar();
-			setCoor(0,+1);
+			setCoor(0, +1);
 			pintar();
 		}
 	}
 
 	public boolean podeDescer() {
-		setCoor(1,0);
+		setCoor(1, 0);
 		if (podePintar()) {
-			setCoor(-1,0);
+			setCoor(-1, 0);
 			return true;
 		}
-		setCoor(-1,0);
+		setCoor(-1, 0);
 		return false;
 	}
 
 	public boolean podeIrEsquerda() {
-		setCoor(0,-1);
+		setCoor(0, -1);
 		if (podePintar()) {
-			setCoor(0,1);
+			setCoor(0, 1);
 			return true;
 		}
-		setCoor(0,1);
+		setCoor(0, 1);
 		return false;
 	}
 
 	public boolean podeIrDireita() {
-		setCoor(0,1);
+		setCoor(0, 1);
 		if (podePintar()) {
-			setCoor(0,-1);
+			setCoor(0, -1);
 			return true;
 		}
-		setCoor(0,-1);
+		setCoor(0, -1);
 		return false;
 	}
 
@@ -147,18 +151,18 @@ public class Peça {
 				apagar();
 				rotacionar();
 				pintar();
-			} 
-//			else {
-//				setCoor(-1, 0);
-//				if(podeGirar()){
-//					setCoor(+1, 0);
-//					apagar();
-//					setCoor(-1, 0);
-//					rotacionar();
-//					pintar();
-//				}else
-//					setCoor(+1, 0);
-//			}
+			}
+			// else {
+			// setCoor(-1, 0);
+			// if(podeGirar()){
+			// setCoor(+1, 0);
+			// apagar();
+			// setCoor(-1, 0);
+			// rotacionar();
+			// pintar();
+			// }else
+			// setCoor(+1, 0);
+			// }
 			break;
 		case DIREIRA:
 			if (podeGirar()) {
@@ -166,47 +170,50 @@ public class Peça {
 				rotacionar();
 				pintar();
 			}
-//			else {
-//				setCoor(0,1);
-//				if(podeGirar()){
-//					setCoor(0,-1);
-//					apagar();
-//					setCoor(0,1);
-//					rotacionar();
-//					pintar();
-//				}else
-//				setCoor(0,-1);
-//			}
+			// else {
+			// setCoor(0,1);
+			// if(podeGirar()){
+			// setCoor(0,-1);
+			// apagar();
+			// setCoor(0,1);
+			// rotacionar();
+			// pintar();
+			// }else
+			// setCoor(0,-1);
+			// }
 			break;
 		case BAIXO:
 			if (podeGirar()) {
 				apagar();
 				rotacionar();
 				pintar();
-			} 
+			}
 			break;
 		case ESQUERDA:
 			if (podeGirar()) {
 				apagar();
 				rotacionar();
 				pintar();
-			} 
-//			else {
-//				setCoor(0,-1);
-//				if(podeGirar()){
-//					setCoor(0,1);
-//					apagar();
-//					setCoor(0,-1);
-//					rotacionar();
-//					pintar();
-//				}else
-//				setCoor(0,1);
-//			}
+			}
+			// else {
+			// setCoor(0,-1);
+			// if(podeGirar()){
+			// setCoor(0,1);
+			// apagar();
+			// setCoor(0,-1);
+			// rotacionar();
+			// pintar();
+			// }else
+			// setCoor(0,1);
+			// }
 			break;
 
 		}
 	}
 
+	public void gerarSombra() {
+		icon = new ImageIcon(getClass().getResource("/imagens/F.png"));
+	}
 
 	public void gerarCor() {
 		Random r = new Random();
@@ -216,14 +223,13 @@ public class Peça {
 			icon = new ImageIcon(getClass().getResource("/imagens/V.png"));
 			break;
 		case 1:
-			icon = new ImageIcon(Principal.class.getResource("/imagens/V.png"));
+			icon = new ImageIcon(Principal.class.getResource("/imagens/AM.png"));
 			break;
 		case 2:
-			icon = new ImageIcon(Principal.class.getResource("/imagens/V.png"));
+			icon = new ImageIcon(Principal.class.getResource("/imagens/A.png"));
 			break;
 		case 3:
-			icon = new ImageIcon(
-					Principal.class.getResource("/imagens/VERD.png"));
+			icon = new ImageIcon(getClass().getResource("/imagens/VERD.png"));
 			break;
 		case 4:
 			icon = new ImageIcon(Principal.class.getResource("/imagens/R.png"));
@@ -239,10 +245,9 @@ public class Peça {
 			break;
 		}
 	}
-	
+
 	public boolean podePintar() {
-		if (blocosDaPeça[0].colidir(this)
-				|| blocosDaPeça[1].colidir(this)
+		if (blocosDaPeça[0].colidir(this) || blocosDaPeça[1].colidir(this)
 				|| blocosDaPeça[2].colidir(this)
 				|| blocosDaPeça[3].colidir(this))
 			return false;
@@ -253,59 +258,60 @@ public class Peça {
 	public void pintar() {
 		blocosDaPeça[0].criar(this);
 		blocosDaPeça[1].criar(this);
-		blocosDaPeça[2].criar( this);
+		blocosDaPeça[2].criar(this);
 		blocosDaPeça[3].criar(this);
 	}
-	
+
 	public void apagar() {
 		blocosDaPeça[0].limpar();
 		blocosDaPeça[1].limpar();
 		blocosDaPeça[2].limpar();
 		blocosDaPeça[3].limpar();
 	}
-	
-	public void setCoor(int x,int y){
-		coorCentralX+=x;
-		coorCentralY+=y;
+
+	public void setCoor(int x, int y) {
+		coorCentralX += x;
+		coorCentralY += y;
 		AtualizarBlocosDaPeça();
 	}
-	
-	public void rotacionar(){
-		switch(rotação){
+
+	public void rotacionar() {
+		switch (rotação) {
 		case NORMAL:
-			rotação=sentido.DIREIRA;
+			rotação = sentido.DIREIRA;
 			break;
 		case DIREIRA:
-			rotação=sentido.BAIXO;
+			rotação = sentido.BAIXO;
 			break;
 		case BAIXO:
-			rotação=sentido.ESQUERDA;
+			rotação = sentido.ESQUERDA;
 			break;
 		case ESQUERDA:
-			rotação=sentido.NORMAL;
+			rotação = sentido.NORMAL;
 			break;
 		}
 		AtualizarBlocosDaPeça();
 	}
-	
-	public void antiRotacionar(){
-		switch(rotação){
+
+	public void antiRotacionar() {
+		switch (rotação) {
 		case NORMAL:
-			rotação=sentido.ESQUERDA;
+			rotação = sentido.ESQUERDA;
 			break;
 		case DIREIRA:
-			rotação=sentido.NORMAL;
+			rotação = sentido.NORMAL;
 			break;
 		case BAIXO:
-			rotação=sentido.DIREIRA;
+			rotação = sentido.DIREIRA;
 			break;
 		case ESQUERDA:
-			rotação=sentido.BAIXO;
+			rotação = sentido.BAIXO;
 			break;
 		}
 		AtualizarBlocosDaPeça();
 	}
-	
-	public void AtualizarBlocosDaPeça(){}
+
+	public void AtualizarBlocosDaPeça() {
+	}
 
 }

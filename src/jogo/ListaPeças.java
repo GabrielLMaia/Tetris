@@ -30,12 +30,14 @@ public class ListaPeças extends JPanel {
 		this.setLayout(null);
 
 		blocosLista = new Bloco[LARGURA_REAL_LISTA][COMPRIMENTO_LISTA];
-
-		JLabel divLista = new JLabel("");
-		divLista.setIcon(new ImageIcon(getClass().getResource(
-				"/imagens/divLinha.png")));
-		divLista.setBounds(0, 90, 120, 30);
-		this.add(divLista);
+		for (int i = 1; i <= 4; i++) {
+			JLabel divLista = new JLabel("");
+			divLista.setIcon(new ImageIcon(getClass().getResource(
+					"/imagens/divLinha.png")));
+			divLista.setBounds(0, 90*i, 120, 30);
+			this.add(divLista);	
+		}
+		
 
 		JPanel areaLista = new JPanel();
 		areaLista.setBounds(0, 30, 120, 30 * LARGURA_REAL_LISTA);
@@ -93,13 +95,13 @@ public class ListaPeças extends JPanel {
 		Random random = new Random();
 		int posição = random.nextInt(TAMANHO);
 		int cont = 0;
-		while (cont < 6 && repetido[posição]) {
+		while (cont <= 6 && repetido[posição]) {
 			if (posição == 6)
 				posição = 0;
 			posição++;
 			cont++;
 		}
-		if (cont == 6) {
+		if (cont == 7) {
 			for (int i = 0; i < TAMANHO; i++) {
 				repetido[i] = false;
 			}
