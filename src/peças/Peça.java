@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 import jogo.Principal;
+import jogo.Tetris;
 
 public class Peça {
 	ImageIcon icon;
@@ -13,6 +14,8 @@ public class Peça {
 		NORMAL, DIREIRA, BAIXO, ESQUERDA
 	};
 
+	private int cor;
+	protected char tipo;
 	protected int coorCentralX;
 	protected int coorCentralY;
 	protected Bloco[] blocosDaPeça = new Bloco[4];
@@ -211,13 +214,49 @@ public class Peça {
 		}
 	}
 
-	public void gerarSombra() {
+	public void setMatrizeCorSombra(Bloco[][] matrizBlocos) {
 		icon = new ImageIcon(getClass().getResource("/imagens/F.png"));
+		this.matrizLocal = matrizBlocos;
+	}
+
+	public void setarPosiçãoSombra(Peça peça, int y, boolean girar) {
+		boolean vaiMudar = peça.podeDescer()
+				&& !((y == 1 && !peça.podeIrDireita()) || (y == -1 && !peça.podeIrEsquerda()));
+		if (vaiMudar) {
+			if ((y != 0 || girar == true) && vaiMudar){
+				if(blocosDaPeça[0]!=null){
+				apagar();
+				}else
+					System.out.println("fudeo muito");
+				
+			}
+			coorCentralX = peça.coorCentralX;
+			coorCentralY = peça.coorCentralY + y;
+			setCoor(0, 0);
+			if (girar && peça.podeGirar()) {
+				rotacionar();
+			}
+			while (podePintarSombra(peça)) {
+				this.setCoor(1, 0);
+			}
+			this.setCoor(-1, 0);
+			pintarSombra();
+		}
+	}
+	
+
+	public char getTipo() {
+		return tipo;
+	}
+
+	public int getCor() {
+		return cor;
 	}
 
 	public void gerarCor() {
 		Random r = new Random();
 		int cor = r.nextInt(8);
+		this.cor = cor;
 		switch (cor) {
 		case 0:
 			icon = new ImageIcon(getClass().getResource("/imagens/V.png"));
@@ -255,11 +294,28 @@ public class Peça {
 		return true;
 	}
 
+	public boolean podePintarSombra(Peça atual) {
+		if (blocosDaPeça[0].colidirSombra(this, atual)
+				|| blocosDaPeça[1].colidirSombra(this, atual)
+				|| blocosDaPeça[2].colidirSombra(this, atual)
+				|| blocosDaPeça[3].colidirSombra(this, atual))
+			return false;
+
+		return true;
+	}
+
 	public void pintar() {
 		blocosDaPeça[0].criar(this);
 		blocosDaPeça[1].criar(this);
 		blocosDaPeça[2].criar(this);
 		blocosDaPeça[3].criar(this);
+	}
+
+	public void pintarSombra() {
+		blocosDaPeça[0].criarBlocoSombra(this);
+		blocosDaPeça[1].criarBlocoSombra(this);
+		blocosDaPeça[2].criarBlocoSombra(this);
+		blocosDaPeça[3].criarBlocoSombra(this);
 	}
 
 	public void apagar() {

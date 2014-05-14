@@ -5,7 +5,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 
 public class Bloco {
-	private Peça peça;
+	public Peça peça;
 	private JLabel bloco;
 	private boolean vazio;
 
@@ -30,6 +30,13 @@ public class Bloco {
 
 	public boolean colidir(Peça peça) {
 		if (isVazio() || this.peça == peça) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean colidirSombra(Peça sombra,Peça atual) {
+		if (isVazio() || this.peça == sombra || this.peça == atual) {
 			return false;
 		}
 		return true;
@@ -84,11 +91,35 @@ public class Bloco {
 		limpar();
 		return matrizBlocos[coor.x + vezes][coor.y];
 	}
+	
+	public Bloco direita(int vezes) {
+		matrizBlocos[coor.x ][coor.y + vezes].getBloco().setIcon(
+				this.getBloco().getIcon());
+		matrizBlocos[coor.x][coor.y + vezes].setVazio(isVazio());
+		matrizBlocos[coor.x][coor.y + vezes].peça = this.peça;
+		limpar();
+		return matrizBlocos[coor.x][coor.y + vezes];
+	}
+	
+	public Bloco esquerda(int vezes) {
+		matrizBlocos[coor.x][coor.y - vezes].getBloco().setIcon(
+				this.getBloco().getIcon());
+		matrizBlocos[coor.x][coor.y - vezes].setVazio(isVazio());
+		matrizBlocos[coor.x][coor.y - vezes].peça = this.peça;
+		limpar();
+		return matrizBlocos[coor.x ][coor.y - vezes];
+	}
 
 	public void criar(Peça peça) {
 		getBloco().setIcon(peça.icon);
 		this.peça = peça;
 		setVazio(false);
+	}
+	
+	public void criarBlocoSombra(Peça peça) {
+		getBloco().setIcon(peça.icon);
+		this.peça = peça;
+		setVazio(true);
 	}
 
 	public JLabel getBloco() {

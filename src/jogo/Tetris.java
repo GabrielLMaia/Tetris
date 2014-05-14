@@ -1,12 +1,14 @@
 package jogo;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-import peças.*;
+import peças.Bloco;
+import peças.Peça;
 
 public class Tetris extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +25,8 @@ public class Tetris extends JPanel implements ActionListener {
 	public final static int POSIÇÃO_LINHA = INICIO_LINHA;
 	public final static int POSIÇÃO_COLUNA = (FIM_COLUNA + INICIO_COLUNA) / 2;
 	public final static int PONTOS_LINHAS[] = new int[] { 200, 500, 800, 5000 };
+	public final static int PONTOS_COLUNAS[] = new int[] { 5000, 7000, 9000,
+			20000 };
 
 	public static boolean pause = false;
 	public static boolean usouHold = false;
@@ -38,7 +42,7 @@ public class Tetris extends JPanel implements ActionListener {
 
 	public Tetris() {
 		setLayout(new GridLayout(LARGURA, COMPRIMENTO, 0, 0));
-
+		// setBackground(Color.green);
 		intervalo = 1000;
 
 		pontuação = 0;
@@ -59,7 +63,6 @@ public class Tetris extends JPanel implements ActionListener {
 
 		// peçaAtual=new PeçaO();
 		// peçaAtual.criar(5,5,blocos);
-
 		pegarDaLista();
 	}
 
@@ -84,29 +87,87 @@ public class Tetris extends JPanel implements ActionListener {
 	public static void pegarHold() {
 		peçaAtual = Hold.getPeçaHold();
 		peçaAtual.criar(POSIÇÃO_LINHA, POSIÇÃO_COLUNA, blocos);
+		// System.out.println(peçaAtual.getTipo());
+		criarSombra();
+	}
+
+	public static void criarSombra() {
+		peçaSombra = ListaPeças.traduzir(peçaAtual.getTipo());
+		peçaSombra.setMatrizeCorSombra(blocos);
+		peçaSombra.setarPosiçãoSombra(peçaAtual, 0, false);
 	}
 
 	public static void pegarDaLista() {
-		Peça peçaAux = ListaPeças.pegarPrimeira();
-		peçaAtual = peçaAux;
-		// peçaSombra.gerarSombra();
-		// peçaSombra.harddrop();
+		peçaAtual = ListaPeças.pegarPrimeira();
 		peçaAtual.criar(POSIÇÃO_LINHA, POSIÇÃO_COLUNA, blocos);
+		criarSombra();
 		usouHold = false;
 	}
 
-	public static void jogo() {
+	public void jogo() {
 		timer.stop();
 		while (checarLinhas() || checarColunas())
 			;
 		pegarDaLista();
 		if (peçaAtual.podeDescer()) {
 			timer.start();
+		} else {
+			// gameover
 		}
 
 	}
 
-	public static boolean checarColunas() {
+	public boolean checarColunas() {
+		int contCores = 0;
+		int corAtual = -1;
+		int inicio = -1;
+		int fim = -1;
+		boolean colunaEliminar = false;
+		for (int i = INICIO_COLUNA; i <= FIM_COLUNA; i++) {
+			colunaEliminar = false;
+			contCores = 0;
+			if (blocos[INICIO_LINHA][i].peça != null) {
+				corAtual = blocos[INICIO_LINHA][i].peça.getCor();
+				contCores++;
+
+			}
+			for (int j = INICIO_LINHA + 1; j <= FIM_LINHA; j++) {
+				if (blocos[j][i].peça != null) {
+					if (blocos[j][i].peça.getCor() == corAtual) {
+						contCores++;
+					} else {
+						corAtual = blocos[j][i].peça.getCor();
+						contCores = 1;
+					}
+				}
+				if (contCores == 10) {
+					colunaEliminar = true;
+					break;
+				}
+			}
+			if (inicio != -1) {
+				if (!colunaEliminar) {
+					fim = i - 1;
+					break;
+				}
+			} else {
+				if (colunaEliminar) {
+					inicio = i;
+				}
+			}
+			corAtual = -1;
+		}
+		if (fim == -1) {
+			fim = FIM_COLUNA;
+		}
+		if (inicio != -1) {
+			int numDeLinhasEliminadas = 1 + (fim - inicio);
+			pontuação += PONTOS_COLUNAS[numDeLinhasEliminadas - 1];
+			verificarIntervalo();
+			eliminarColunas(inicio, fim);
+			puxarColunas(inicio, numDeLinhasEliminadas);
+			return true;
+		}
 		return false;
 	}
 
@@ -142,24 +203,44 @@ public class Tetris extends JPanel implements ActionListener {
 		}
 	}
 
-	public static void descerLinhas(int inicio, int numLinhasApagadas) {
+	public void descerLinhas(int inicio, int numLinhasApagadas) {
 		for (int i = inicio - 1; i >= INICIO_LINHA; i--) {
 			for (int j = INICIO_COLUNA; j <= FIM_COLUNA; j++) {
 				blocos[i][j].descer(numLinhasApagadas);
 			}
 		}
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		// try {
+		// Thread t=new Thread();
+		// synchronized (t) {
+		// t.wait(2000);
+		// }
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		gravidade();
+	}
+
+	public void puxarColunas(int inicio, int numLinhasApagadas) {
+		if (inicio <= (INICIO_COLUNA + FIM_COLUNA) / 2) {
+			for (int i = inicio + 1; i <= FIM_COLUNA; i++) {
+				for (int j = INICIO_LINHA; j <= FIM_LINHA; j++) {
+					blocos[j][i].esquerda(numLinhasApagadas);
+				}
+			}
+		} else {
+			for (int i = inicio - 1; i >= INICIO_COLUNA; i--) {
+				for (int j = INICIO_LINHA; j <= FIM_LINHA; j++) {
+					blocos[j][i].direita(numLinhasApagadas);
+				}
+			}
 		}
 		gravidade();
 	}
 
-	public static boolean checarLinhas() {
+	public boolean checarLinhas() {
 		int numDeBlocosLinha = 0;
 		int inicio = -1;
-		int fim = -2;
+		int fim = -1;
 
 		for (int i = INICIO_LINHA; i <= FIM_LINHA; i++) {
 			numDeBlocosLinha = 0;
@@ -177,7 +258,7 @@ public class Tetris extends JPanel implements ActionListener {
 			}
 		}
 
-		if (fim == -2)
+		if (fim == -1)
 			fim = FIM_LINHA;
 		if (inicio != -1) {
 			int numDeLinhasEliminadas = 1 + (fim - inicio);
@@ -188,6 +269,14 @@ public class Tetris extends JPanel implements ActionListener {
 			return true;
 		}
 		return false;
+	}
+
+	public static void eliminarColunas(int inicio, int fim) {
+		for (int i = inicio; i <= fim; i++) {
+			for (int j = INICIO_LINHA; j <= FIM_LINHA; j++) {
+				blocos[j][i].limpar();
+			}
+		}
 	}
 
 	public static void eliminarLinhas(int inicio, int fim) {

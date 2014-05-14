@@ -96,16 +96,21 @@ public class ListaPeças extends JPanel {
 		int posição = random.nextInt(TAMANHO);
 		int cont = 0;
 		while (cont <= 6 && repetido[posição]) {
-			if (posição == 6)
+			if (posição == 6){
 				posição = 0;
+			}else
 			posição++;
 			cont++;
 		}
 		if (cont == 7) {
 			for (int i = 0; i < TAMANHO; i++) {
+				if(!repetido[i])
+					System.out.println("fudeo muito");
 				repetido[i] = false;
 			}
 		}
+		if(repetido[posição])
+			System.out.println("fudeo");
 		lista.addT(traduzir(bag[posição]));
 		repetido[posição] = true;
 	}

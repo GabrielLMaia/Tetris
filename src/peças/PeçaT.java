@@ -3,6 +3,7 @@ public class PeçaT extends Peça {
 
 	public PeçaT(){
 		super();
+		tipo='t';
 	}
 	public PeçaT(int coorX, int coorY, Bloco[][] matrizBlocos) {
 		super(coorX,coorY,matrizBlocos);

@@ -2,9 +2,11 @@ package peças;
 public class PeçaI extends Peça {
 	public PeçaI(){
 		super();
+		tipo='i';
 	}
 	public PeçaI(int coorX, int coorY, Bloco[][] matrizBlocos) {
 		super(coorX,coorY,matrizBlocos);
+		tipo='i';
 	}
 	
 	public void AtualizarBlocosDaPeça(){

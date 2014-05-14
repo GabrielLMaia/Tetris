@@ -2,6 +2,7 @@ package peças;
 public class PeçaZ extends Peça {
 	public PeçaZ(){
 		super();
+		tipo='z';
 	}
 	public PeçaZ(int coorX, int coorY, Bloco[][] matrizBlocos) {
 		super(coorX,coorY,matrizBlocos);

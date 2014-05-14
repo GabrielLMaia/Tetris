@@ -107,7 +107,7 @@ public class Principal extends JFrame {
 		tetris.setBounds(180, 0, 300, LARGURA_TELA_JOGO);
 		jogo.add(tetris);
 
-		Hold hold=new Hold();
+		Hold hold = new Hold();
 		hold.setBounds(0, 0, 150, 120);
 		jogo.add(hold);
 
@@ -123,7 +123,7 @@ public class Principal extends JFrame {
 		divD.setBounds(480, 0, 30, 600);
 		jogo.add(divD);
 
-		Controle C = new Controle();
+		Controle C = new Controle(tetris);
 		this.addKeyListener(C);
 
 	}
