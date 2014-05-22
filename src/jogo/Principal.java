@@ -25,7 +25,9 @@ public class Principal extends JFrame {
 	private static final int LARGURA_REAL_TELA_JOGO = LARGURA_TELA_JOGO + 39;
 	private static final int COMPRIMENTO_TELA_JOGO = 600;
 	private static final int COMPRIMENTO_REAL_TELA_JOGO = COMPRIMENTO_TELA_JOGO + 76;
-
+	
+	private Tetris tetris;
+	private Dados dados;
 	/**
 	 * Launch the application.
 	 */
@@ -64,6 +66,7 @@ public class Principal extends JFrame {
 		Titulo.setForeground(Color.WHITE);
 
 		JLabel Iniciar = new JLabel("Iniciar");
+		Iniciar.setFont(Iniciar.getFont().deriveFont(Iniciar.getFont().getStyle() | Font.BOLD));
 		Iniciar.setBounds(208, 227, 50, 14);
 		Iniciar.addMouseListener(new MouseAdapter() {
 
@@ -103,14 +106,18 @@ public class Principal extends JFrame {
 		lista.setBounds(510, 0, 150, 600);
 		jogo.add(lista);
 
-		Tetris tetris = new Tetris();
+		tetris = new Tetris(dados);
 		tetris.setBounds(180, 0, 300, LARGURA_TELA_JOGO);
 		jogo.add(tetris);
 
 		Hold hold = new Hold();
 		hold.setBounds(0, 0, 150, 120);
 		jogo.add(hold);
-
+		
+		dados = new Dados(tetris);
+		dados.setBounds(0, 120, 150, 480);
+		jogo.add(dados);
+		
 		JLabel divE = new JLabel("");
 		divE.setIcon(new ImageIcon(Principal.class
 				.getResource("/imagens/Div.png")));

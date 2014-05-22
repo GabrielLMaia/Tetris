@@ -330,6 +330,10 @@ public class Peça {
 		coorCentralY += y;
 		AtualizarBlocosDaPeça();
 	}
+	
+	public void teste(){
+		System.out.println("x: "+coorCentralX+"\n y:"+coorCentralY);
+	}
 
 	public void rotacionar() {
 		switch (rotação) {
