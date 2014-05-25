@@ -4,7 +4,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -23,6 +22,9 @@ public class Principal extends JFrame {
 	private JPanel telas;
 	private static final int LARGURA_TELA_JOGO = 600;
 	private static final int LARGURA_REAL_TELA_JOGO = LARGURA_TELA_JOGO + 39;
+	private static int dificuldade_inicial =1;
+	private static boolean gravidade=true;
+	private static boolean musica=true;
 	private static final int COMPRIMENTO_TELA_JOGO = 600;
 	private static final int COMPRIMENTO_REAL_TELA_JOGO = COMPRIMENTO_TELA_JOGO + 76;
 	
@@ -51,7 +53,7 @@ public class Principal extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		telas = new JPanel();
-		setBounds(100, 100, 500, 500);
+		setBounds(100, 100, 486, 523);
 		setLocationRelativeTo(null);
 		setContentPane(telas);
 		telas.setLayout(new CardLayout(0, 0));
@@ -59,44 +61,90 @@ public class Principal extends JFrame {
 		inicial.setBackground(Color.BLACK);
 		telas.add(inicial, "tela inicial");
 
-		JLabel Titulo = new JLabel("Tetris");
-		Titulo.setBounds(0, 74, 484, 72);
+		JLabel Titulo = new JLabel("");
+		Titulo.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Tetris.jpg")));
+		Titulo.setBounds(-15, 0, 452, 504);
 		Titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		Titulo.setFont(new Font("Tahoma", Font.PLAIN, 59));
 		Titulo.setForeground(Color.WHITE);
-
-		JLabel Iniciar = new JLabel("Iniciar");
-		Iniciar.setFont(Iniciar.getFont().deriveFont(Iniciar.getFont().getStyle() | Font.BOLD));
-		Iniciar.setBounds(208, 227, 50, 14);
-		Iniciar.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				((CardLayout) telas.getLayout()).show(telas, "jogo");
-				setSize(COMPRIMENTO_REAL_TELA_JOGO, LARGURA_REAL_TELA_JOGO);
-				setLocationRelativeTo(null);
-				Tetris.timer.start();
-			}
-		});
-		Iniciar.setForeground(Color.WHITE);
-
-		JLabel Config = new JLabel("Configura\u00E7\u00F5es");
-		Config.setBounds(208, 253, 97, 14);
-		Config.setForeground(Color.WHITE);
 		inicial.setLayout(null);
-		inicial.add(Titulo);
-		inicial.add(Iniciar);
-		inicial.add(Config);
+		
+				final JLabel Iniciar = new JLabel("");
+				Iniciar.setIcon(new ImageIcon(Principal.class.getResource("/imagens/JogarSel.png")));
+				Iniciar.setFont(Iniciar.getFont().deriveFont(Iniciar.getFont().getStyle() | Font.BOLD));
+				Iniciar.setBounds(116, 140, 142, 65);
+				Iniciar.addMouseListener(new MouseAdapter() {
 
-		JLabel lblVaiSeFuder = new JLabel("Vai se fuder");
-		lblVaiSeFuder.setForeground(Color.WHITE);
-		lblVaiSeFuder.setBounds(208, 278, 91, 14);
-		inicial.add(lblVaiSeFuder);
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						((CardLayout) telas.getLayout()).show(telas, "jogo");
+						setSize(COMPRIMENTO_REAL_TELA_JOGO, LARGURA_REAL_TELA_JOGO);
+						setLocationRelativeTo(null);
+						Tetris.timer.start();
+					}
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						Iniciar.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Jogar.png")));
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						Iniciar.setIcon(new ImageIcon(Principal.class.getResource("/imagens/JogarSel.png")));
+					}
+				});
+				inicial.add(Iniciar);
+		
+				final JLabel Sair = new JLabel("");
+				Sair.setIcon(new ImageIcon(Principal.class.getResource("/imagens/SairSel.png")));
+				Sair.setBounds(110, 280, 132, 42);
+				Sair.addMouseListener(new MouseAdapter() {
+
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						try {
+							System.exit(1);
+						} catch (Throwable e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						Sair.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Sair.png")));
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						Sair.setIcon(new ImageIcon(Principal.class.getResource("/imagens/SairSel.png")));
+					}
+				});
+				inicial.add(Sair);
+		
+				final JLabel Config = new JLabel("");
+				Config.setIcon(new ImageIcon(Principal.class.getResource("/imagens/ConfigSel.png")));
+				Config.setBounds(116, 216, 344, 49);
+				Config.addMouseListener(new MouseAdapter() {
+
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						try {
+							System.exit(1);
+						} catch (Throwable e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						Config.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Config.png")));
+					}
+					@Override
+					public void mouseExited(MouseEvent e) {
+						Config.setIcon(new ImageIcon(Principal.class.getResource("/imagens/ConfigSel.png")));
+					}
+				});
+				inicial.add(Config);
+		inicial.add(Titulo);
 		JPanel gameover = new JPanel();
 		telas.add(gameover, "game over");
-		JPanel teste = new JPanel();
-		telas.add(teste, "name_22404026101542");
-		teste.setLayout(new GridLayout(16, 10, 1, 1));
 
 		JPanel jogo = new JPanel();
 		telas.add(jogo, "jogo");
@@ -131,7 +179,51 @@ public class Principal extends JFrame {
 		jogo.add(divD);
 
 		Controle C = new Controle(tetris);
+		
+		JPanel Configu = new JPanel();
+		Configu.setBackground(Color.BLACK);
+		telas.add(Configu, "name_897370220784225");
+		Configu.setLayout(null);
+		
+		JLabel TilCon = new JLabel("New label");
+		TilCon.setHorizontalAlignment(SwingConstants.CENTER);
+		TilCon.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Config.png")));
+		TilCon.setBounds(37, 26, 423, 70);
+		Configu.add(TilCon);
 		this.addKeyListener(C);
 
+	}
+
+	public static int getDificuldade_inicial() {
+		return dificuldade_inicial;
+	}
+
+	public static void mudarDificuldade() {
+		if(dificuldade_inicial==3){
+			dificuldade_inicial=0;
+		}else
+			dificuldade_inicial++;
+	}
+
+	public static boolean isGravidade() {
+		return gravidade;
+	}
+
+	public static void onOffGravidade() {
+		if(gravidade){
+			gravidade = false;
+		}else
+			gravidade=true;
+	}
+
+	public static boolean isMusica() {
+		return musica;
+	}
+
+	public static void onOffMusica() {
+		if(musica){
+			musica = false;
+		}else
+			musica=true;
 	}
 }
