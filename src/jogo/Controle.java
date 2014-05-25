@@ -42,7 +42,7 @@ public class Controle implements KeyListener {
 			if(!Tetris.usouHold){
 				tetris.peçaSombra.apagar();
 				Hold.hold();
-				tetris.criarSombra();
+//				tetris.criarSombra();
 				Tetris.usouHold=true;
 			}
 			break;

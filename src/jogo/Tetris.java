@@ -104,8 +104,6 @@ public class Tetris extends JPanel implements ActionListener {
 		peçaSombra = ListaPeças.traduzir(peçaAtual.getTipo());
 		peçaSombra.setMatrizeCorSombra(blocos);
 		peçaSombra.setarPosiçãoSombra(peçaAtual, 0, false);
-		peçaAtual.teste();
-		peçaSombra.teste();
 	}
 
 	public static void pegarDaLista() {
