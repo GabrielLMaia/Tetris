@@ -25,6 +25,7 @@ public class Principal extends JFrame {
 	private static int dificuldade_inicial =1;
 	private static boolean gravidade=true;
 	private static boolean musica=true;
+	private static char musicaTipo='t';
 	private static final int COMPRIMENTO_TELA_JOGO = 600;
 	private static final int COMPRIMENTO_REAL_TELA_JOGO = COMPRIMENTO_TELA_JOGO + 76;
 	
@@ -126,7 +127,7 @@ public class Principal extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						try {
-							System.exit(1);
+							((CardLayout) telas.getLayout()).show(telas, "Conf");
 						} catch (Throwable e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -182,14 +183,60 @@ public class Principal extends JFrame {
 		
 		JPanel Configu = new JPanel();
 		Configu.setBackground(Color.BLACK);
-		telas.add(Configu, "name_897370220784225");
+		telas.add(Configu, "Conf");
 		Configu.setLayout(null);
 		
-		JLabel TilCon = new JLabel("New label");
+		JLabel TilCon = new JLabel("");
 		TilCon.setHorizontalAlignment(SwingConstants.CENTER);
 		TilCon.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Config.png")));
 		TilCon.setBounds(37, 26, 423, 70);
 		Configu.add(TilCon);
+		
+		final JLabel grav = new JLabel("");
+		grav.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				if(isGravidade()){
+					grav.setIcon(new ImageIcon(Principal.class.getResource("/imagens/GraOn.png")));
+				}else{
+					grav.setIcon(new ImageIcon(Principal.class.getResource("/imagens/GraOff.png")));
+				}
+				onOffGravidade();
+			}
+		});
+		grav.setIcon(new ImageIcon(Principal.class.getResource("/imagens/GraOn.png")));
+		grav.setBounds(10, 127, 460, 63);
+		Configu.add(grav);
+		
+		JLabel voltar = new JLabel("");
+		voltar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				((CardLayout) telas.getLayout()).show(telas, "tela inicial");
+			}
+		});
+		voltar.setIcon(new ImageIcon(Principal.class.getResource("/imagens/VoltarSel - Copia.png")));
+		voltar.setBounds(37, 445, 114, 28);
+		Configu.add(voltar);
+		
+		JLabel musicLabel = new JLabel("");
+		musicLabel.setIcon(new ImageIcon(Principal.class.getResource("/imagens/MuOn.png")));
+		musicLabel.setBounds(0, 196, 236, 63);
+		Configu.add(musicLabel);
+		
+		JLabel musicTipoLabel = new JLabel("");
+		musicTipoLabel.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Tetris.png")));
+		musicTipoLabel.setBounds(278, 207, 137, 38);
+		Configu.add(musicTipoLabel);
+		
+		JLabel setaDir = new JLabel("");
+		setaDir.setIcon(new ImageIcon(Principal.class.getResource("/imagens/setaDsel.png")));
+		setaDir.setBounds(414, 204, 46, 45);
+		Configu.add(setaDir);
+		
+		JLabel setaEsq = new JLabel("");
+		setaEsq.setIcon(new ImageIcon(Principal.class.getResource("/imagens/setaEsel.png")));
+		setaEsq.setBounds(222, 201, 46, 45);
+		Configu.add(setaEsq);
 		this.addKeyListener(C);
 
 	}

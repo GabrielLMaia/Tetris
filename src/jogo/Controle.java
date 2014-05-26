@@ -31,9 +31,11 @@ public class Controle implements KeyListener {
 			break;
 		case KeyEvent.VK_P:
 			if (Tetris.pause) {
+				Tetris.resumeMusic();
 				Tetris.pause = false;
 				Tetris.timer.start();
 			} else {
+				Tetris.pauseMusic();
 				Tetris.pause = true;
 				Tetris.timer.stop();
 			}

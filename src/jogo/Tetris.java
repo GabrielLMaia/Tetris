@@ -1,14 +1,25 @@
 package jogo;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JPanel;
 
+import kuusisto.tinysound.Music;
+import kuusisto.tinysound.Sound;
+import kuusisto.tinysound.TinySound;
+
 import peças.Bloco;
 import peças.Peça;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
 
 public class Tetris extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -27,10 +38,9 @@ public class Tetris extends JPanel implements ActionListener {
 	public final static int PONTOS_LINHAS[] = new int[] { 200, 500, 800, 5000 };
 	public final static int PONTOS_COLUNAS[] = new int[] { 5000, 7000, 9000,
 			20000 };
-
+	static Music musica;
 	public static boolean pause = false;
 	public static boolean usouHold = false;
-
 	public static int intervalo;
 	public static int nivel;
 	public static int numLinhasElim;
@@ -49,7 +59,7 @@ public class Tetris extends JPanel implements ActionListener {
 		setLayout(new GridLayout(LARGURA, COMPRIMENTO, 0, 0));
 		// setBackground(Color.green);
 		intervalo = 1600;
-
+		music('z');
 		pontuação = 0;
 		nivel=1;
 		timer = new javax.swing.Timer(intervalo, this);
@@ -296,6 +306,27 @@ public class Tetris extends JPanel implements ActionListener {
 				blocos[i][j].limpar();
 			}
 		}
+	}
+	public static void music(char music) {       
+		TinySound.init();
+		switch(music){
+		case('m'):
+			musica = TinySound.loadMusic("Musicas/Megaman.wav");
+		break;
+		case('z'):
+			musica = TinySound.loadMusic("Musicas/Zelda.wav");
+		break;
+		case('t'):
+			musica = TinySound.loadMusic("Musicas/Tetris.wav");
+		break;
+		}
+		musica.play(true);
+    }
+	public static void pauseMusic() {
+		musica.pause();
+	}
+	public static void resumeMusic() {
+		musica.resume();
 	}
 
 }
