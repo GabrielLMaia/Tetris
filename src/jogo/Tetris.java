@@ -59,7 +59,7 @@ public class Tetris extends JPanel implements ActionListener {
 		setLayout(new GridLayout(LARGURA, COMPRIMENTO, 0, 0));
 		// setBackground(Color.green);
 		intervalo = 1600;
-		music('z');
+//		music('z');
 		pontuação = 0;
 		nivel=1;
 		timer = new javax.swing.Timer(intervalo, this);
@@ -327,6 +327,9 @@ public class Tetris extends JPanel implements ActionListener {
 	}
 	public static void resumeMusic() {
 		musica.resume();
+	}
+	public static void finalizarMusic() {
+		TinySound.shutdown();
 	}
 
 }
