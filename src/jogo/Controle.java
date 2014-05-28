@@ -4,27 +4,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Controle implements KeyListener {
-	Tetris tetris;
-	public Controle(Tetris tetris){
-		this.tetris=tetris;
-	}
 	public void keyPressed(KeyEvent k) {
 		switch (k.getKeyCode()) {
-		
+
 		case KeyEvent.VK_DOWN:
-			tetris.peçaAtual.descer();
+			Tetris.peçaAtual.descer();
 			break;
 		case KeyEvent.VK_RIGHT:
-			tetris.peçaSombra.setarPosiçãoSombra(Tetris.peçaAtual, 1, false);
-			tetris.peçaAtual.direita();
+			Tetris.peçaSombra.setarPosiçãoSombra(Tetris.peçaAtual, 1, false);
+			Tetris.peçaAtual.direita();
 			break;
 		case KeyEvent.VK_LEFT:
-			tetris.peçaSombra.setarPosiçãoSombra(Tetris.peçaAtual, -1, false);
-			tetris.peçaAtual.esquerda();
+			Tetris.peçaSombra.setarPosiçãoSombra(Tetris.peçaAtual, -1, false);
+			Tetris.peçaAtual.esquerda();
 			break;
 		case KeyEvent.VK_SPACE:
 			Tetris.peçaAtual.harddrop();
-			tetris.jogo();
+			Tetris.jogo();
 			break;
 		case KeyEvent.VK_G:
 			Tetris.gravidade();
@@ -41,11 +37,10 @@ public class Controle implements KeyListener {
 			}
 			break;
 		case KeyEvent.VK_SHIFT:
-			if(!Tetris.usouHold){
-				tetris.peçaSombra.apagar();
+			if (!Tetris.usouHold) {
+				Tetris.peçaSombra.apagar();
 				Hold.hold();
-//				tetris.criarSombra();
-				Tetris.usouHold=true;
+				Tetris.usouHold = true;
 			}
 			break;
 		}
@@ -54,7 +49,7 @@ public class Controle implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent k) {
-		if (k.getKeyCode() == KeyEvent.VK_UP){
+		if (k.getKeyCode() == KeyEvent.VK_UP) {
 			Tetris.peçaSombra.setarPosiçãoSombra(Tetris.peçaAtual, 0, true);
 			Tetris.peçaAtual.girar();
 		}

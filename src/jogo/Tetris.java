@@ -3,23 +3,13 @@ package jogo;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.JPanel;
 
 import kuusisto.tinysound.Music;
-import kuusisto.tinysound.Sound;
 import kuusisto.tinysound.TinySound;
-
 import peças.Bloco;
 import peças.Peça;
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
 
 public class Tetris extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -53,18 +43,15 @@ public class Tetris extends JPanel implements ActionListener {
 
 	static javax.swing.Timer timer;
 
-	public Dados dados;
 	
 	public Tetris(Dados dados) {
 		setLayout(new GridLayout(LARGURA, COMPRIMENTO, 0, 0));
-		// setBackground(Color.green);
 		intervalo = 1600;
 //		music('z');
 		pontuação = 0;
 		nivel=1;
 		timer = new javax.swing.Timer(intervalo, this);
 
-		this.dados=dados;
 		
 		for (int i = 0; i < LARGURA_REAL; i++) {
 			for (int j = 0; j < COMPRIMENTO_REAL; j++) {
@@ -92,7 +79,7 @@ public class Tetris extends JPanel implements ActionListener {
 		}
 	}
 
-	public void verificarIntervalo() {
+	public static void verificarIntervalo() {
 		if(pontuação >= 5000*nivel){
 			if(intervalo!=100){
 			nivel=(pontuação/5000)+1;
@@ -100,7 +87,7 @@ public class Tetris extends JPanel implements ActionListener {
 			timer.setDelay(intervalo);
 			}
 		}
-		dados.setDados();
+		Dados.setDados();
 	}
 
 	public static void pegarHold() {
@@ -123,7 +110,7 @@ public class Tetris extends JPanel implements ActionListener {
 		usouHold = false;
 	}
 
-	public void jogo() {
+	public static void jogo() {
 		timer.stop();
 		while (checarLinhas() || checarColunas())
 			;
@@ -136,7 +123,7 @@ public class Tetris extends JPanel implements ActionListener {
 
 	}
 
-	public boolean checarColunas() {
+	public static boolean checarColunas() {
 		int contCores = 0;
 		int corAtual = -1;
 		int inicio = -1;
@@ -223,7 +210,7 @@ public class Tetris extends JPanel implements ActionListener {
 		}
 	}
 
-	public void descerLinhas(int inicio, int numLinhasApagadas) {
+	public static void descerLinhas(int inicio, int numLinhasApagadas) {
 		for (int i = inicio - 1; i >= INICIO_LINHA; i--) {
 			for (int j = INICIO_COLUNA; j <= FIM_COLUNA; j++) {
 				blocos[i][j].descer(numLinhasApagadas);
@@ -237,10 +224,11 @@ public class Tetris extends JPanel implements ActionListener {
 		// } catch (InterruptedException e) {
 		// e.printStackTrace();
 		// }
+		if(Principal.isGravidade())
 		gravidade();
 	}
 
-	public void puxarColunas(int inicio, int numLinhasApagadas) {
+	public static void puxarColunas(int inicio, int numLinhasApagadas) {
 		if (inicio <= (INICIO_COLUNA + FIM_COLUNA) / 2) {
 			for (int i = inicio + 1; i <= FIM_COLUNA; i++) {
 				for (int j = INICIO_LINHA; j <= FIM_LINHA; j++) {
@@ -254,10 +242,11 @@ public class Tetris extends JPanel implements ActionListener {
 				}
 			}
 		}
+		if(Principal.isGravidade())
 		gravidade();
 	}
 
-	public boolean checarLinhas() {
+	public static boolean checarLinhas() {
 		int numDeBlocosLinha = 0;
 		int inicio = -1;
 		int fim = -1;

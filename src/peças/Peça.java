@@ -5,7 +5,6 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 import jogo.Principal;
-import jogo.Tetris;
 
 public class Peça {
 	ImageIcon icon;
@@ -155,17 +154,6 @@ public class Peça {
 				rotacionar();
 				pintar();
 			}
-			// else {
-			// setCoor(-1, 0);
-			// if(podeGirar()){
-			// setCoor(+1, 0);
-			// apagar();
-			// setCoor(-1, 0);
-			// rotacionar();
-			// pintar();
-			// }else
-			// setCoor(+1, 0);
-			// }
 			break;
 		case DIREIRA:
 			if (podeGirar()) {
@@ -173,17 +161,6 @@ public class Peça {
 				rotacionar();
 				pintar();
 			}
-			// else {
-			// setCoor(0,1);
-			// if(podeGirar()){
-			// setCoor(0,-1);
-			// apagar();
-			// setCoor(0,1);
-			// rotacionar();
-			// pintar();
-			// }else
-			// setCoor(0,-1);
-			// }
 			break;
 		case BAIXO:
 			if (podeGirar()) {
@@ -198,17 +175,6 @@ public class Peça {
 				rotacionar();
 				pintar();
 			}
-			// else {
-			// setCoor(0,-1);
-			// if(podeGirar()){
-			// setCoor(0,1);
-			// apagar();
-			// setCoor(0,-1);
-			// rotacionar();
-			// pintar();
-			// }else
-			// setCoor(0,1);
-			// }
 			break;
 
 		}

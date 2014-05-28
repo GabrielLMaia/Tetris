@@ -1,11 +1,8 @@
 package jogo;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.Graphics;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,16 +10,14 @@ import javax.swing.JPanel;
 public class Dados extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private Tetris tetris;
-	private JLabel pontos=new JLabel();
-	private JLabel nivel=new JLabel();
-	private JLabel linhas=new JLabel();
-	private JLabel colunas=new JLabel();
+	private static JLabel pontos=new JLabel();
+	private static JLabel nivel=new JLabel();
+	private static JLabel linhas=new JLabel();
+	private static JLabel colunas=new JLabel();
 	private final int POSIÇÃO_UM=35;
 	private final int ESPAÇAMENTO=90;
 	public Dados(Tetris tetris){
 		this.setLayout(null);
-		this.tetris=tetris;
 		this.setBackground(Color.green);
 		
 		Font font =new Font("Vani", Font.PLAIN, 16);
@@ -52,13 +47,12 @@ public class Dados extends JPanel {
 		imagDados.setIcon(new ImageIcon(getClass().getResource("/imagens/Dados.png")));
 		add(imagDados);
 		
-		tetris.dados=this;
 		setDados();
 	}
-	public void setDados(){
-		pontos.setText(""+tetris.pontuação);
-		nivel.setText(""+tetris.nivel);
-		linhas.setText(""+tetris.numLinhasElim);
-		colunas.setText(""+tetris.numColunasElim);
+	public static void setDados(){
+		pontos.setText(""+Tetris.pontuação);
+		nivel.setText(""+Tetris.nivel);
+		linhas.setText(""+Tetris.numLinhasElim);
+		colunas.setText(""+Tetris.numColunasElim);
 	}
 }

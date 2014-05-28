@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -82,6 +81,7 @@ public class Principal extends JFrame {
 						setSize(COMPRIMENTO_REAL_TELA_JOGO, LARGURA_REAL_TELA_JOGO);
 						setLocationRelativeTo(null);
 						Tetris.timer.start();
+						if(isMusica())
 						Tetris.music(musicaTipo);
 					}
 					@Override
@@ -181,7 +181,7 @@ public class Principal extends JFrame {
 		divD.setBounds(480, 0, 30, 600);
 		jogo.add(divD);
 
-		Controle C = new Controle(tetris);
+		Controle C = new Controle();
 		
 		JPanel Configu = new JPanel();
 		Configu.setBackground(Color.BLACK);
@@ -190,14 +190,14 @@ public class Principal extends JFrame {
 		
 		JLabel TilCon = new JLabel("");
 		TilCon.setHorizontalAlignment(SwingConstants.CENTER);
-		TilCon.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Config.png")));
+		TilCon.setIcon(new ImageIcon(Principal.class.getResource("/imagens/ConfigSel.png")));
 		TilCon.setBounds(37, 26, 423, 70);
 		Configu.add(TilCon);
 		
 		final JLabel grav = new JLabel("");
 		grav.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				if(isGravidade()){
+				if(!isGravidade()){
 					grav.setIcon(new ImageIcon(Principal.class.getResource("/imagens/GraOn.png")));
 				}else{
 					grav.setIcon(new ImageIcon(Principal.class.getResource("/imagens/GraOff.png")));
@@ -228,10 +228,20 @@ public class Principal extends JFrame {
 		voltar.setBounds(37, 445, 114, 28);
 		Configu.add(voltar);
 		
-		JLabel musicLabel = new JLabel("");
+		final JLabel musicLabel = new JLabel("");
 		musicLabel.setIcon(new ImageIcon(Principal.class.getResource("/imagens/MuOn.png")));
 		musicLabel.setBounds(0, 196, 236, 63);
 		Configu.add(musicLabel);
+		musicLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				if(isMusica()){
+					musicLabel.setIcon(new ImageIcon(Principal.class.getResource("/imagens/MuOff.png")));
+				}else{
+					musicLabel.setIcon(new ImageIcon(Principal.class.getResource("/imagens/MuOn.png")));
+				}
+				onOffMusica();
+			}
+		});
 		
 		final JLabel musicTipoLabel = new JLabel("");
 		musicTipoLabel.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Tetris.png")));
@@ -303,6 +313,11 @@ public class Principal extends JFrame {
 		setaEsq.setIcon(new ImageIcon(Principal.class.getResource("/imagens/setaEsel.png")));
 		setaEsq.setBounds(222, 201, 46, 45);
 		Configu.add(setaEsq);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(Principal.class.getResource("/imagens/Dificuldade.png")));
+		label.setBounds(16, 270, 206, 45);
+		Configu.add(label);
 		this.addKeyListener(C);
 		
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -348,5 +363,4 @@ public class Principal extends JFrame {
 		}else
 			musica=true;
 	}
-	
 }
