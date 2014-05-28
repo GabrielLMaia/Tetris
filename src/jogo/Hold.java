@@ -48,12 +48,12 @@ public class Hold extends JPanel {
 	
 	public static void hold() {
 		if (peçaHold == null) {
-			peçaHold = Tetris.peçaAtual;
+			peçaHold = Tetris.getPeçaAtual();
 			peçaHold.apagar();
 			Tetris.pegarDaLista();
 		} else {
 			peçaHold.apagar();
-			Peça peçaAux=Tetris.peçaAtual;
+			Peça peçaAux=Tetris.getPeçaAtual();
 			peçaAux.apagar();
 			Tetris.pegarHold();
 			peçaHold = peçaAux;

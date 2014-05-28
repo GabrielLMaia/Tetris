@@ -8,39 +8,39 @@ public class Controle implements KeyListener {
 		switch (k.getKeyCode()) {
 
 		case KeyEvent.VK_DOWN:
-			Tetris.peçaAtual.descer();
+			Tetris.getPeçaAtual().descer();
 			break;
 		case KeyEvent.VK_RIGHT:
-			Tetris.peçaSombra.setarPosiçãoSombra(Tetris.peçaAtual, 1, false);
-			Tetris.peçaAtual.direita();
+			Tetris.getPeçaSombra().setarPosiçãoSombra(Tetris.getPeçaAtual(), 1, false);
+			Tetris.getPeçaAtual().direita();
 			break;
 		case KeyEvent.VK_LEFT:
-			Tetris.peçaSombra.setarPosiçãoSombra(Tetris.peçaAtual, -1, false);
-			Tetris.peçaAtual.esquerda();
+			Tetris.getPeçaSombra().setarPosiçãoSombra(Tetris.getPeçaAtual(), -1, false);
+			Tetris.getPeçaAtual().esquerda();
 			break;
 		case KeyEvent.VK_SPACE:
-			Tetris.peçaAtual.harddrop();
+			Tetris.getPeçaAtual().harddrop();
 			Tetris.jogo();
 			break;
 		case KeyEvent.VK_G:
 			Tetris.gravidade();
 			break;
 		case KeyEvent.VK_P:
-			if (Tetris.pause) {
+			if (Tetris.isPause()) {
 				Tetris.resumeMusic();
-				Tetris.pause = false;
+				Tetris.setPause(false);
 				Tetris.timer.start();
 			} else {
 				Tetris.pauseMusic();
-				Tetris.pause = true;
+				Tetris.setPause(true);
 				Tetris.timer.stop();
 			}
 			break;
 		case KeyEvent.VK_SHIFT:
-			if (!Tetris.usouHold) {
-				Tetris.peçaSombra.apagar();
+			if (!Tetris.usouHold()) {
+				Tetris.getPeçaSombra().apagar();
 				Hold.hold();
-				Tetris.usouHold = true;
+				Tetris.setUsouHold(true);
 			}
 			break;
 		}
@@ -50,8 +50,8 @@ public class Controle implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent k) {
 		if (k.getKeyCode() == KeyEvent.VK_UP) {
-			Tetris.peçaSombra.setarPosiçãoSombra(Tetris.peçaAtual, 0, true);
-			Tetris.peçaAtual.girar();
+			Tetris.getPeçaSombra().setarPosiçãoSombra(Tetris.getPeçaAtual(), 0, true);
+			Tetris.getPeçaAtual().girar();
 		}
 
 	}

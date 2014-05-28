@@ -50,9 +50,9 @@ public class Dados extends JPanel {
 		setDados();
 	}
 	public static void setDados(){
-		pontos.setText(""+Tetris.pontuação);
-		nivel.setText(""+Tetris.nivel);
-		linhas.setText(""+Tetris.numLinhasElim);
-		colunas.setText(""+Tetris.numColunasElim);
+		pontos.setText(""+Tetris.getPontuação());
+		nivel.setText(""+Tetris.getNivel());
+		linhas.setText(""+Tetris.getNumLinhasElim());
+		colunas.setText(""+Tetris.getNumColunasElim());
 	}
 }

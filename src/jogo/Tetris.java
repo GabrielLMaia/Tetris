@@ -14,45 +14,41 @@ import peças.Peça;
 public class Tetris extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
-	public final static int LARGURA = 20;
-	public final static int COMPRIMENTO = 10;
+	private final static int LARGURA = 20;
+	private final static int COMPRIMENTO = 10;
 	public final static int LARGURA_REAL = LARGURA + 5;
-	public final static int COMPRIMENTO_REAL = COMPRIMENTO + 4;
-	public final static int INICIO_COLUNA = 2;
-	public final static int FIM_COLUNA = COMPRIMENTO_REAL - 3;
-	public final static int INICIO_LINHA = 2;
-	public final static int FALSE = -1;
-	public final static int FIM_LINHA = LARGURA_REAL - 3;
-	public final static int POSIÇÃO_LINHA = INICIO_LINHA;
-	public final static int POSIÇÃO_COLUNA = (FIM_COLUNA + INICIO_COLUNA) / 2;
-	public final static int PONTOS_LINHAS[] = new int[] { 200, 500, 800, 5000 };
-	public final static int PONTOS_COLUNAS[] = new int[] { 5000, 7000, 9000,
+	private final static int COMPRIMENTO_REAL = COMPRIMENTO + 4;
+	private final static int INICIO_COLUNA = 2;
+	private final static int FIM_COLUNA = COMPRIMENTO_REAL - 3;
+	private final static int INICIO_LINHA = 2;
+	private final static int FIM_LINHA = LARGURA_REAL - 3;
+	private final static int POSIÇÃO_LINHA = INICIO_LINHA;
+	private final static int POSIÇÃO_COLUNA = (FIM_COLUNA + INICIO_COLUNA) / 2;
+	private final static int PONTOS_LINHAS[] = new int[] { 200, 500, 800, 5000 };
+	private final static int PONTOS_COLUNAS[] = new int[] { 5000, 7000, 9000,
 			20000 };
 	static Music musica;
-	public static boolean pause = false;
-	public static boolean usouHold = false;
-	public static int intervalo;
-	public static int nivel;
-	public static int numLinhasElim;
-	public static int numColunasElim;
-	public static int pontuação;
-	public static int pontuaçãoAux;
-	public static Bloco[][] blocos = new Bloco[LARGURA_REAL][COMPRIMENTO_REAL];
-	public static Peça peçaAtual;
-	public static Peça peçaSombra;
+	private static boolean pause = false;
+	private static boolean usouHold = false;
+	private static int intervalo;
+	private static int nivel;
+	private static int numLinhasElim;
+	private static int numColunasElim;
+	private static int pontuação;
+	private static Bloco[][] blocos = new Bloco[LARGURA_REAL][COMPRIMENTO_REAL];
+	private static Peça peçaAtual;
+	private static Peça peçaSombra;
 
 	static javax.swing.Timer timer;
 
-	
 	public Tetris(Dados dados) {
 		setLayout(new GridLayout(LARGURA, COMPRIMENTO, 0, 0));
 		intervalo = 1600;
-//		music('z');
-		pontuação = 0;
-		nivel=1;
+		// music('z');
+		setPontuação(0);
+		setNivel(1);
 		timer = new javax.swing.Timer(intervalo, this);
 
-		
 		for (int i = 0; i < LARGURA_REAL; i++) {
 			for (int j = 0; j < COMPRIMENTO_REAL; j++) {
 				blocos[i][j] = new Bloco(i, j, blocos);
@@ -70,9 +66,9 @@ public class Tetris extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (!pause) {
-			if (peçaAtual.podeDescer()) {
-				peçaAtual.descer();
+		if (!isPause()) {
+			if (getPeçaAtual().podeDescer()) {
+				getPeçaAtual().descer();
 			} else {
 				jogo();
 			}
@@ -80,34 +76,34 @@ public class Tetris extends JPanel implements ActionListener {
 	}
 
 	public static void verificarIntervalo() {
-		if(pontuação >= 5000*nivel){
-			if(intervalo!=100){
-			nivel=(pontuação/5000)+1;
-			intervalo =intervalo -100;
-			timer.setDelay(intervalo);
+		if (getPontuação() >= 5000 * getNivel()) {
+			if (intervalo != 100) {
+				setNivel((getPontuação() / 5000) + 1);
+				intervalo = intervalo - 100;
+				timer.setDelay(intervalo);
 			}
 		}
 		Dados.setDados();
 	}
 
 	public static void pegarHold() {
-		peçaAtual = Hold.getPeçaHold();
-		peçaAtual.criar(POSIÇÃO_LINHA, POSIÇÃO_COLUNA, blocos);
+		setPeçaAtual(Hold.getPeçaHold());
+		getPeçaAtual().criar(POSIÇÃO_LINHA, POSIÇÃO_COLUNA, blocos);
 		// System.out.println(peçaAtual.getTipo());
 		criarSombra();
 	}
 
 	public static void criarSombra() {
-		peçaSombra = ListaPeças.traduzir(peçaAtual.getTipo());
-		peçaSombra.setMatrizeCorSombra(blocos);
-		peçaSombra.setarPosiçãoSombra(peçaAtual, 0, false);
+		setPeçaSombra(ListaPeças.traduzir(getPeçaAtual().getTipo()));
+		getPeçaSombra().setMatrizeCorSombra(blocos);
+		getPeçaSombra().setarPosiçãoSombra(getPeçaAtual(), 0, false);
 	}
 
 	public static void pegarDaLista() {
-		peçaAtual = ListaPeças.pegarPrimeira();
-		peçaAtual.criar(POSIÇÃO_LINHA, POSIÇÃO_COLUNA, blocos);
+		setPeçaAtual(ListaPeças.pegarPrimeira());
+		getPeçaAtual().criar(POSIÇÃO_LINHA, POSIÇÃO_COLUNA, blocos);
 		criarSombra();
-		usouHold = false;
+		setUsouHold(false);
 	}
 
 	public static void jogo() {
@@ -115,7 +111,7 @@ public class Tetris extends JPanel implements ActionListener {
 		while (checarLinhas() || checarColunas())
 			;
 		pegarDaLista();
-		if (peçaAtual.podeDescer()) {
+		if (getPeçaAtual().podeDescer()) {
 			timer.start();
 		} else {
 			// gameover
@@ -168,8 +164,8 @@ public class Tetris extends JPanel implements ActionListener {
 		}
 		if (inicio != -1) {
 			int numDeColunasEliminadas = 1 + (fim - inicio);
-			numLinhasElim+=numDeColunasEliminadas;
-			pontuação += PONTOS_COLUNAS[numDeColunasEliminadas - 1];
+			setNumLinhasElim(getNumLinhasElim() + numDeColunasEliminadas);
+			setPontuação(getPontuação() + PONTOS_COLUNAS[numDeColunasEliminadas - 1]);
 			verificarIntervalo();
 			eliminarColunas(inicio, fim);
 			puxarColunas(inicio, numDeColunasEliminadas);
@@ -224,8 +220,8 @@ public class Tetris extends JPanel implements ActionListener {
 		// } catch (InterruptedException e) {
 		// e.printStackTrace();
 		// }
-		if(Principal.isGravidade())
-		gravidade();
+		if (Principal.isGravidade())
+			gravidade();
 	}
 
 	public static void puxarColunas(int inicio, int numLinhasApagadas) {
@@ -242,8 +238,8 @@ public class Tetris extends JPanel implements ActionListener {
 				}
 			}
 		}
-		if(Principal.isGravidade())
-		gravidade();
+		if (Principal.isGravidade())
+			gravidade();
 	}
 
 	public static boolean checarLinhas() {
@@ -271,8 +267,8 @@ public class Tetris extends JPanel implements ActionListener {
 			fim = FIM_LINHA;
 		if (inicio != -1) {
 			int numDeLinhasEliminadas = 1 + (fim - inicio);
-			numLinhasElim+=numDeLinhasEliminadas;
-			pontuação += PONTOS_LINHAS[numDeLinhasEliminadas - 1];
+			setNumLinhasElim(getNumLinhasElim() + numDeLinhasEliminadas);
+			setPontuação(getPontuação() + PONTOS_LINHAS[numDeLinhasEliminadas - 1]);
 			verificarIntervalo();
 			eliminarLinhas(inicio, fim);
 			descerLinhas(inicio, numDeLinhasEliminadas);
@@ -296,29 +292,97 @@ public class Tetris extends JPanel implements ActionListener {
 			}
 		}
 	}
-	public static void music(char music) {       
+
+	public static void music(char music) {
 		TinySound.init();
-		switch(music){
-		case('m'):
+		switch (music) {
+		case ('m'):
 			musica = TinySound.loadMusic("Musicas/Megaman.wav");
-		break;
-		case('z'):
+			break;
+		case ('z'):
 			musica = TinySound.loadMusic("Musicas/Zelda.wav");
-		break;
-		case('t'):
+			break;
+		case ('t'):
 			musica = TinySound.loadMusic("Musicas/Tetris.wav");
-		break;
+			break;
 		}
 		musica.play(true);
-    }
+	}
+
 	public static void pauseMusic() {
 		musica.pause();
 	}
+
 	public static void resumeMusic() {
 		musica.resume();
 	}
+
 	public static void finalizarMusic() {
 		TinySound.shutdown();
+	}
+
+	public static boolean isPause() {
+		return pause;
+	}
+
+	public static void setPause(boolean pause) {
+		Tetris.pause = pause;
+	}
+
+	public static Peça getPeçaAtual() {
+		return peçaAtual;
+	}
+
+	public static void setPeçaAtual(Peça peçaAtual) {
+		Tetris.peçaAtual = peçaAtual;
+	}
+
+	public static Peça getPeçaSombra() {
+		return peçaSombra;
+	}
+
+	public static void setPeçaSombra(Peça peçaSombra) {
+		Tetris.peçaSombra = peçaSombra;
+	}
+
+	public static boolean usouHold() {
+		return usouHold;
+	}
+
+	public static void setUsouHold(boolean usouHold) {
+		Tetris.usouHold = usouHold;
+	}
+
+	public static int getPontuação() {
+		return pontuação;
+	}
+
+	public static void setPontuação(int pontuação) {
+		Tetris.pontuação = pontuação;
+	}
+
+	public static int getNivel() {
+		return nivel;
+	}
+
+	public static void setNivel(int nivel) {
+		Tetris.nivel = nivel;
+	}
+
+	public static int getNumLinhasElim() {
+		return numLinhasElim;
+	}
+
+	public static void setNumLinhasElim(int numLinhasElim) {
+		Tetris.numLinhasElim = numLinhasElim;
+	}
+
+	public static int getNumColunasElim() {
+		return numColunasElim;
+	}
+
+	public static void setNumColunasElim(int numColunasElim) {
+		Tetris.numColunasElim = numColunasElim;
 	}
 
 }
