@@ -1,0 +1,15 @@
+Gabriel,1000000
+Afrodite,40000
+Thor,27000
+Lucifer,40000
+Jesus,25000
+Cronos,42000
+Hermes,35000
+Poseidon,30000
+Hades,20000
+Zeus,50000
+Aldo,-1
+Marte,29000
+Juno,5000
+Netuno,8400
+Vênus,47000

@@ -16,9 +16,8 @@ public class Dados extends JPanel {
 	private static JLabel colunas=new JLabel();
 	private final int POSIÇÃO_UM=35;
 	private final int ESPAÇAMENTO=90;
-	public Dados(Tetris tetris){
+	public Dados(){
 		this.setLayout(null);
-		this.setBackground(Color.green);
 		
 		Font font =new Font("Vani", Font.PLAIN, 16);
 		

@@ -186,14 +186,10 @@ public class Peça {
 	}
 
 	public void setarPosiçãoSombra(Peça peça, int y, boolean girar) {
-		boolean vaiMudar = peça.podeDescer()
-				&& !((y == 1 && !peça.podeIrDireita()) || (y == -1 && !peça.podeIrEsquerda()));
+		boolean vaiMudar = !((y == 1 && !peça.podeIrDireita()) || (y == -1 && !peça.podeIrEsquerda()));
 		if (vaiMudar) {
 			if ((y != 0 || girar == true) && vaiMudar){
-				if(blocosDaPeça[0]!=null){
 				apagar();
-				}else
-					System.out.println("fudeo muito");
 				
 			}
 			coorCentralX = peça.coorCentralX;

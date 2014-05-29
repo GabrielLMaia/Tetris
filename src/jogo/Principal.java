@@ -12,6 +12,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Principal extends JFrame {
 
@@ -28,9 +35,11 @@ public class Principal extends JFrame {
 	private static char musicaTipo='t';
 	private static final int COMPRIMENTO_TELA_JOGO = 600;
 	private static final int COMPRIMENTO_REAL_TELA_JOGO = COMPRIMENTO_TELA_JOGO + 76;
-	
+	private Placar placar=new Placar(); 
 	private Tetris tetris;
 	private Dados dados;
+	private JTextField nome;
+	private JTable table;
 	/**
 	 * Launch the application.
 	 */
@@ -51,7 +60,8 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
-        this.setTitle("Tetris Blaster");
+    
+		this.setTitle("Tetris Blaster");
 		telas = new JPanel();
 		setBounds(100, 100, 486, 523);
 		setLocationRelativeTo(null);
@@ -121,6 +131,38 @@ public class Principal extends JFrame {
 				});
 				inicial.add(Sair);
 		
+				JPanel jogo = new JPanel();
+				telas.add(jogo, "jogo");
+				jogo.setLayout(null);
+				
+				ListaPeças lista = new ListaPeças();
+				lista.setBounds(510, 0, 150, 600);
+				jogo.add(lista);
+				
+				tetris = new Tetris();
+				tetris.setBounds(180, 0, 300, LARGURA_TELA_JOGO);
+				jogo.add(tetris);
+				
+				Hold hold = new Hold();
+				hold.setBounds(0, 0, 150, 120);
+				jogo.add(hold);
+				
+				dados = new Dados();
+				dados.setBounds(0, 120, 150, 480);
+				jogo.add(dados);
+				
+				JLabel divE = new JLabel("");
+				divE.setIcon(new ImageIcon(Principal.class
+						.getResource("/imagens/Div.png")));
+				divE.setBounds(150, 0, 30, 600);
+				jogo.add(divE);
+				
+				JLabel divD = new JLabel("");
+				divD.setIcon(new ImageIcon(Principal.class
+						.getResource("/imagens/Div.png")));
+				divD.setBounds(480, 0, 30, 600);
+				jogo.add(divD);
+				
 				final JLabel Config = new JLabel("");
 				Config.setIcon(new ImageIcon(Principal.class.getResource("/imagens/ConfigSel.png")));
 				Config.setBounds(116, 216, 344, 49);
@@ -129,7 +171,7 @@ public class Principal extends JFrame {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
 						try {
-							((CardLayout) telas.getLayout()).show(telas, "Conf");
+							((CardLayout) telas.getLayout()).show(telas, "gameover");
 						} catch (Throwable e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -147,39 +189,69 @@ public class Principal extends JFrame {
 				inicial.add(Config);
 		inicial.add(Titulo);
 		JPanel gameover = new JPanel();
-		telas.add(gameover, "game over");
-
-		JPanel jogo = new JPanel();
-		telas.add(jogo, "jogo");
-		jogo.setLayout(null);
-
-		ListaPeças lista = new ListaPeças();
-		lista.setBounds(510, 0, 150, 600);
-		jogo.add(lista);
-
-		tetris = new Tetris(dados);
-		tetris.setBounds(180, 0, 300, LARGURA_TELA_JOGO);
-		jogo.add(tetris);
-
-		Hold hold = new Hold();
-		hold.setBounds(0, 0, 150, 120);
-		jogo.add(hold);
+		gameover.setBackground(Color.BLACK);
+		telas.add(gameover, "gameover");
+		gameover.setLayout(null);
 		
-		dados = new Dados(tetris);
-		dados.setBounds(0, 120, 150, 480);
-		jogo.add(dados);
+		JLabel lblSeusPontos = new JLabel("Seus pontos:");
+		lblSeusPontos.setFont(new Font("FixedsysTTF", Font.BOLD, 20));
+		lblSeusPontos.setForeground(Color.WHITE);
+		lblSeusPontos.setBounds(10, 11, 144, 34);
+		gameover.add(lblSeusPontos);
 		
-		JLabel divE = new JLabel("");
-		divE.setIcon(new ImageIcon(Principal.class
-				.getResource("/imagens/Div.png")));
-		divE.setBounds(150, 0, 30, 600);
-		jogo.add(divE);
+		final JLabel pontos = new JLabel("");
+		pontos.setForeground(Color.WHITE);
+		pontos.setFont(new Font("FixedsysTTF", Font.BOLD, 20));
+		pontos.setBounds(164, 11, 296, 34);
+		gameover.add(pontos);
+		
+		JLabel lblSeuNome = new JLabel("Seu nome:");
+		lblSeuNome.setForeground(Color.WHITE);
+		lblSeuNome.setFont(new Font("FixedsysTTF", Font.BOLD, 20));
+		lblSeuNome.setBounds(10, 56, 113, 34);
+		gameover.add(lblSeuNome);
+		
+		nome = new JTextField();
+		nome.setFont(new Font("FixedsysTTF", Font.PLAIN, 20));
+		nome.setBounds(133, 55, 296, 40);
+		gameover.add(nome);
+		nome.setColumns(10);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 149, 470, 261);
+		gameover.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			placar.matrizTabela(),
+			new String[] {
+				"Nome", "Pontos"
+			}
+		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			boolean[] columnEditables = new boolean[] {
+				false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		scrollPane.setViewportView(table);
+		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				placar.armazenar(nome.getText(),Integer.parseInt( pontos.getText()));
+			}
+		});
+		btnSalvar.setBounds(174, 107, 90, 28);
+		gameover.add(btnSalvar);
 
-		JLabel divD = new JLabel("");
-		divD.setIcon(new ImageIcon(Principal.class
-				.getResource("/imagens/Div.png")));
-		divD.setBounds(480, 0, 30, 600);
-		jogo.add(divD);
 
 		Controle C = new Controle();
 		

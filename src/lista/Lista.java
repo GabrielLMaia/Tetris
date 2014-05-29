@@ -5,6 +5,10 @@ public class Lista<T> {
 	private No<T> tail;
 	private int tam = 0;
 
+	public int getTam() {
+		return tam;
+	}
+
 	public No<T> getHead() {
 		return head;
 	}

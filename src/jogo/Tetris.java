@@ -41,14 +41,12 @@ public class Tetris extends JPanel implements ActionListener {
 
 	static javax.swing.Timer timer;
 
-	public Tetris(Dados dados) {
+	public Tetris() {
 		setLayout(new GridLayout(LARGURA, COMPRIMENTO, 0, 0));
-		intervalo = 1600;
-		// music('z');
+		intervalo = 100;
 		setPontuação(0);
 		setNivel(1);
 		timer = new javax.swing.Timer(intervalo, this);
-
 		for (int i = 0; i < LARGURA_REAL; i++) {
 			for (int j = 0; j < COMPRIMENTO_REAL; j++) {
 				blocos[i][j] = new Bloco(i, j, blocos);
@@ -59,20 +57,25 @@ public class Tetris extends JPanel implements ActionListener {
 				}
 			}
 		}
-
-		// peçaAtual=new PeçaO();
-		// peçaAtual.criar(5,5,blocos);
 		pegarDaLista();
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (!isPause()) {
-			if (getPeçaAtual().podeDescer()) {
-				getPeçaAtual().descer();
-			} else {
-				jogo();
-			}
-		}
+//		new Thread(new Runnable() {
+			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+				if (!isPause()) {
+					if (getPeçaAtual().podeDescer()) {
+						getPeçaAtual().descer();
+					} else {
+						jogo();
+					}
+				}
+//				
+//			}
+//		}).start();
 	}
 
 	public static void verificarIntervalo() {
@@ -89,7 +92,6 @@ public class Tetris extends JPanel implements ActionListener {
 	public static void pegarHold() {
 		setPeçaAtual(Hold.getPeçaHold());
 		getPeçaAtual().criar(POSIÇÃO_LINHA, POSIÇÃO_COLUNA, blocos);
-		// System.out.println(peçaAtual.getTipo());
 		criarSombra();
 	}
 
@@ -207,21 +209,24 @@ public class Tetris extends JPanel implements ActionListener {
 	}
 
 	public static void descerLinhas(int inicio, int numLinhasApagadas) {
+		
 		for (int i = inicio - 1; i >= INICIO_LINHA; i--) {
 			for (int j = INICIO_COLUNA; j <= FIM_COLUNA; j++) {
 				blocos[i][j].descer(numLinhasApagadas);
 			}
 		}
-		// try {
-		// Thread t=new Thread();
-		// synchronized (t) {
-		// t.wait(2000);
-		// }
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-		if (Principal.isGravidade())
+//		 try {
+//		 Thread.sleep(500);
+//		 System.out.println("sleep terminado");
+//		 } catch (InterruptedException e) {
+//		 e.printStackTrace();
+//		 }
+		 
+		 
+		if (Principal.isGravidade()){
 			gravidade();
+		}
+			
 	}
 
 	public static void puxarColunas(int inicio, int numLinhasApagadas) {
