@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import lista.Lista;
 import lista.No;
-
+//é essa classe que contém os métodos de escrever e ler o arquivo txt dos placares,assim como o de ordenar utilizando merge sort 
 public class Placar {
 	private static final String NOME_ARQUIVO = "placar.txt";
 

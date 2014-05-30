@@ -17,3 +17,5 @@ Herleson,0
 oioio,0
 kk,3600
 l,0
+m,0
+x,0
