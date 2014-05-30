@@ -5,10 +5,11 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 import jogo.Principal;
-
+//a peça possuí um vetor com 4 blocos,a matriz em que ela se localiza,o "tipo" de peça(L,J,S...),as coordenadas dela,e o sentido de rotação 
+//atual dela
 public class Peça {
 	ImageIcon icon;
-
+	//optei por usar sentido como um enum
 	enum sentido {
 		NORMAL, DIREIRA, BAIXO, ESQUERDA
 	};
@@ -34,7 +35,7 @@ public class Peça {
 		setCoor(coorX, coorY);
 		pintar();
 	}
-
+	//"criar" cria a peça no local informado,na matriz informada,semelhante ao construtor 
 	public void criar(int coorX, int coorY, Bloco[][] matrizBlocos) {
 		rotação = sentido.NORMAL;
 		coorCentralX = 0;
@@ -43,7 +44,8 @@ public class Peça {
 		setCoor(coorX, coorY);
 		pintar();
 	}
-
+	//toda a movimentação da peça funciona atraves do "setCoor" que é um método que recebe as alterações nas coordenadas da peça e cria
+	//ela no local,para saber se pode se mover é utizalo o podePintar que verifica se algum do blocos de peça sofrem colisão
 	public void descer() {
 		if (podeDescer()) {
 			apagar();
@@ -140,7 +142,7 @@ public class Peça {
 		return false;
 
 	}
-
+	//hard drop é quando a peça cai até não poder mais
 	public void harddrop() {
 		while (podeDescer())
 			descer();
@@ -184,9 +186,10 @@ public class Peça {
 		icon = new ImageIcon(getClass().getResource("/imagens/F.png"));
 		this.matrizLocal = matrizBlocos;
 	}
-
+	//o sombra funciona da seguinte maneira,ela vai apartir da posição da peça atual cair,isso se a peça atual mudar,funciona parecido
+	//como um hard drop;
 	public void setarPosiçãoSombra(Peça peça, int y, boolean girar) {
-		boolean vaiMudar = !((y == 1 && !peça.podeIrDireita()) || (y == -1 && !peça.podeIrEsquerda()));
+		boolean vaiMudar =peça.podeDescer() && !((y == 1 && !peça.podeIrDireita()) || (y == -1 && !peça.podeIrEsquerda()));
 		if (vaiMudar) {
 			if ((y != 0 || girar == true) && vaiMudar){
 				apagar();
@@ -214,7 +217,7 @@ public class Peça {
 	public int getCor() {
 		return cor;
 	}
-
+	//usando Random é gerado um número e apartir dele a cor
 	public void gerarCor() {
 		Random r = new Random();
 		int cor = r.nextInt(8);
@@ -332,7 +335,7 @@ public class Peça {
 		}
 		AtualizarBlocosDaPeça();
 	}
-
+	//esse método será sobrescrito por todas as variações de peça,e através dele que a peça "sabe como se pintar". 
 	public void AtualizarBlocosDaPeça() {
 	}
 

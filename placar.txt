@@ -13,3 +13,7 @@ Marte,29000
 Juno,5000
 Netuno,8400
 Vênus,47000
+Herleson,0
+oioio,0
+kk,3600
+l,0

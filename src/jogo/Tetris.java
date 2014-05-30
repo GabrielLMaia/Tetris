@@ -24,28 +24,33 @@ public class Tetris extends JPanel implements ActionListener {
 	private final static int FIM_LINHA = LARGURA_REAL - 3;
 	private final static int POSIÇÃO_LINHA = INICIO_LINHA;
 	private final static int POSIÇÃO_COLUNA = (FIM_COLUNA + INICIO_COLUNA) / 2;
-	private final static int PONTOS_LINHAS[] = new int[] { 200, 500, 800, 5000 };
-	private final static int PONTOS_COLUNAS[] = new int[] { 5000, 7000, 9000,
-			20000 };
-	static Music musica;
+	private final static int PONTOS_LINHAS[] = new int[] { 200, 500, 800, 1500 };
+	private final static int PONTOS_COLUNAS[] = new int[] { 200, 500, 800, 1500};
+	
+	private static Music musica;
+	
 	private static boolean pause = false;
 	private static boolean usouHold = false;
+	
 	private static int intervalo;
 	private static int nivel;
 	private static int numLinhasElim;
 	private static int numColunasElim;
 	private static int pontuação;
+	
 	private static Bloco[][] blocos = new Bloco[LARGURA_REAL][COMPRIMENTO_REAL];
 	private static Peça peçaAtual;
 	private static Peça peçaSombra;
-
+	private static Principal p;
 	static javax.swing.Timer timer;
 
-	public Tetris() {
+	//inicializa a matriz do jogo
+	public Tetris(Principal principal) {
+		p=principal;
 		setLayout(new GridLayout(LARGURA, COMPRIMENTO, 0, 0));
-		intervalo = 100;
 		setPontuação(0);
 		setNivel(1);
+		intervalo=1200;
 		timer = new javax.swing.Timer(intervalo, this);
 		for (int i = 0; i < LARGURA_REAL; i++) {
 			for (int j = 0; j < COMPRIMENTO_REAL; j++) {
@@ -57,9 +62,16 @@ public class Tetris extends JPanel implements ActionListener {
 				}
 			}
 		}
-		pegarDaLista();
 	}
-
+	public static void setIntervaloInicial(){
+		switch(Principal.getDificuldade()){
+		case(0):intervalo=2500;break;
+		case(1):intervalo=1200;break;
+		case(2):intervalo=500;break;
+		case(3):intervalo=50;break;
+		}
+		timer.setDelay(intervalo);
+	}
 	public void actionPerformed(ActionEvent e) {
 //		new Thread(new Runnable() {
 			
@@ -83,6 +95,7 @@ public class Tetris extends JPanel implements ActionListener {
 			if (intervalo != 100) {
 				setNivel((getPontuação() / 5000) + 1);
 				intervalo = intervalo - 100;
+				System.out.println(intervalo);
 				timer.setDelay(intervalo);
 			}
 		}
@@ -116,7 +129,7 @@ public class Tetris extends JPanel implements ActionListener {
 		if (getPeçaAtual().podeDescer()) {
 			timer.start();
 		} else {
-			// gameover
+			p.gameover();
 		}
 
 	}
@@ -251,14 +264,21 @@ public class Tetris extends JPanel implements ActionListener {
 		int numDeBlocosLinha = 0;
 		int inicio = -1;
 		int fim = -1;
-
+		int cor=-1;
+		int x2=1;
 		for (int i = INICIO_LINHA; i <= FIM_LINHA; i++) {
 			numDeBlocosLinha = 0;
+			if(!blocos[i][INICIO_COLUNA].isVazio())
+				cor=blocos[i][INICIO_COLUNA].peça.getCor();
 			for (int j = INICIO_COLUNA; j <= FIM_COLUNA; j++) {
 				if (!blocos[i][j].isVazio()) {
 					numDeBlocosLinha++;
+					if(cor!=blocos[i][j].peça.getCor())
+						cor=-1;
 				}
 			}
+			if(cor!=-1)
+				x2=2;
 			if (inicio == -1) {
 				if (numDeBlocosLinha == COMPRIMENTO)
 					inicio = i;
@@ -273,7 +293,7 @@ public class Tetris extends JPanel implements ActionListener {
 		if (inicio != -1) {
 			int numDeLinhasEliminadas = 1 + (fim - inicio);
 			setNumLinhasElim(getNumLinhasElim() + numDeLinhasEliminadas);
-			setPontuação(getPontuação() + PONTOS_LINHAS[numDeLinhasEliminadas - 1]);
+			setPontuação(getPontuação() + PONTOS_LINHAS[numDeLinhasEliminadas - 1]*x2);
 			verificarIntervalo();
 			eliminarLinhas(inicio, fim);
 			descerLinhas(inicio, numDeLinhasEliminadas);
@@ -388,6 +408,20 @@ public class Tetris extends JPanel implements ActionListener {
 
 	public static void setNumColunasElim(int numColunasElim) {
 		Tetris.numColunasElim = numColunasElim;
+	}
+	public static void reset(){
+		for (int i = INICIO_LINHA; i <= FIM_LINHA; i++) {
+			for (int j = INICIO_COLUNA; j <= FIM_COLUNA; j++) {
+				blocos[i][j].limpar();
+			}
+		}
+		setIntervaloInicial();
+		pontuação=0;
+		nivel=1;
+		numColunasElim=0;
+		numLinhasElim=0;
+		Hold.apagarHold();
+		pegarDaLista();
 	}
 
 }

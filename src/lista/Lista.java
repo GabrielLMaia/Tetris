@@ -1,5 +1,5 @@
 package lista;
-
+//uma lista simplesmente encadiada,utilizada na lista de peças.Ela possuí o adicionar e remover na cabeça e no rabo 
 public class Lista<T> {
 	private No<T> head;
 	private No<T> tail;

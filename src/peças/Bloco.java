@@ -3,7 +3,8 @@ package peças;
 import java.awt.Color;
 
 import javax.swing.JLabel;
-
+//o bloco contém uma JLabel poderá conter a imagem que ficará visível na tela,uma variável boolean para saber se le está ou não vazio,a
+//matriz em que se encontra e as coordenadas dele nessa matriz
 public class Bloco {
 	public Peça peça;
 	private JLabel bloco;
@@ -27,7 +28,7 @@ public class Bloco {
 		getBloco().setBackground(Color.black);
 		setVazio(true);
 	}
-
+	//o bloco irá "colidir" caso não seja vazio ou a peça dele for a mesma passada 
 	public boolean colidir(Peça peça) {
 		if (isVazio() || this.peça == peça) {
 			return false;
@@ -47,7 +48,8 @@ public class Bloco {
 		setVazio(true);
 		peça = null;
 	}
-
+	//o bloco vai gerar um vetor de blocos,"a peça atual dele",ele verifica se ele possuí bloco adjacentes da mesma peça,caso possua esse
+	//bloco vai entrar no vetor e fará a mesma checagem
 	public Bloco[] gerarPeça(Bloco[] blocoPeça,int x,int y) {
 		if (isVazio()) {
 			return blocoPeça;
@@ -82,7 +84,7 @@ public class Bloco {
 	public boolean podeDescer() {
 		return !matrizBlocos[coor.x + 1][coor.y].colidir(this.peça);
 	}
-
+	//ele se "movimenta" pintando o bloco em outra posição e apagando o da posição anterior
 	public Bloco descer(int vezes) {
 		matrizBlocos[coor.x + vezes][coor.y].getBloco().setIcon(
 				this.getBloco().getIcon());
@@ -117,9 +119,11 @@ public class Bloco {
 	}
 	
 	public void criarBlocoSombra(Peça peça) {
+		if(this.isVazio()){
 		getBloco().setIcon(peça.icon);
 		this.peça = peça;
 		setVazio(true);
+		}
 	}
 
 	public JLabel getBloco() {

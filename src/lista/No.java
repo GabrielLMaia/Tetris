@@ -1,5 +1,5 @@
 package lista;
-
+//um simples nó genérico
 public class No<T> {
 	private T dado;
 	private No<T> prox;

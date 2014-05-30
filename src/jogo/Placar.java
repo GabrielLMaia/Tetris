@@ -14,7 +14,6 @@ public class Placar {
 	private static final String NOME_ARQUIVO = "placar.txt";
 
 	private class Jogador {
-		@SuppressWarnings("unused")//not really dude
 		String nome;
 		int pontos;
 
