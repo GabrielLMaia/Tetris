@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import lista.Lista;
 import lista.No;
 import peças.*;
-
+//essa é a classe que contém a LSE de peças e mostra elas na tela
 public class ListaPeças extends JPanel {
 	private static final long serialVersionUID = 1L;
 
@@ -90,7 +90,8 @@ public class ListaPeças extends JPanel {
 		atualizarLista();
 		return proxima;
 	}
-	
+	//gera peça de forma que uma peça só pode ser pega se ela não já foi pega naquela "rodada",essa "rodada" acaba quando todos tipos de
+	//peças foream pegos,assim um peça nunca irá demorar mais de 12 para aparecer novamente
 	public static void gerarPeça() {
 		Random random = new Random();
 		int posição = random.nextInt(TAMANHO);

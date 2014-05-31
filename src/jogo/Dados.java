@@ -6,7 +6,7 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+//essa classe e responsável por mostrar os pontos,nível e números de linhas e colunas apagadas 
 public class Dados extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -48,6 +48,7 @@ public class Dados extends JPanel {
 		
 		setDados();
 	}
+	//ela pega os dados de Tetris e coloca o valor nas labels
 	public static void setDados(){
 		pontos.setText(""+Tetris.getPontuação());
 		nivel.setText(""+Tetris.getNivel());

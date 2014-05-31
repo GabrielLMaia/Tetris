@@ -10,7 +10,7 @@ import kuusisto.tinysound.Music;
 import kuusisto.tinysound.TinySound;
 import peças.Bloco;
 import peças.Peça;
-
+//classe reponsável pela matriz principal e pelo loop
 public class Tetris extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
@@ -63,6 +63,7 @@ public class Tetris extends JPanel implements ActionListener {
 			}
 		}
 	}
+	//seta o intervalo de acordo com a dificuldade escolhida
 	public static void setIntervaloInicial(){
 		switch(Principal.getDificuldade()){
 		case(0):intervalo=2500;break;
@@ -72,6 +73,7 @@ public class Tetris extends JPanel implements ActionListener {
 		}
 		timer.setDelay(intervalo);
 	}
+	//método chamado pelo timer
 	public void actionPerformed(ActionEvent e) {
 //		new Thread(new Runnable() {
 			
@@ -89,7 +91,7 @@ public class Tetris extends JPanel implements ActionListener {
 //			}
 //		}).start();
 	}
-
+	
 	public static void verificarIntervalo() {
 		if (getPontuação() >= 5000 * getNivel()) {
 			if (intervalo != 100) {
@@ -101,13 +103,13 @@ public class Tetris extends JPanel implements ActionListener {
 		}
 		Dados.setDados();
 	}
-
+	
 	public static void pegarHold() {
 		setPeçaAtual(Hold.getPeçaHold());
 		getPeçaAtual().criar(POSIÇÃO_LINHA, POSIÇÃO_COLUNA, blocos);
 		criarSombra();
 	}
-
+	//cria a peça sombra
 	public static void criarSombra() {
 		setPeçaSombra(ListaPeças.traduzir(getPeçaAtual().getTipo()));
 		getPeçaSombra().setMatrizeCorSombra(blocos);
@@ -120,7 +122,7 @@ public class Tetris extends JPanel implements ActionListener {
 		criarSombra();
 		setUsouHold(false);
 	}
-
+	//chamado assim que a peça atual não poder mais cair
 	public static void jogo() {
 		timer.stop();
 		while (checarLinhas() || checarColunas())
@@ -188,7 +190,7 @@ public class Tetris extends JPanel implements ActionListener {
 		}
 		return false;
 	}
-
+	//gravidade especial que faz com que os blocos não fiquem voando
 	public static void gravidade() {
 		for (int i = FIM_LINHA; i >= INICIO_LINHA; i--) {
 			for (int j = INICIO_COLUNA; j <= FIM_COLUNA; j++) {
@@ -228,12 +230,6 @@ public class Tetris extends JPanel implements ActionListener {
 				blocos[i][j].descer(numLinhasApagadas);
 			}
 		}
-//		 try {
-//		 Thread.sleep(500);
-//		 System.out.println("sleep terminado");
-//		 } catch (InterruptedException e) {
-//		 e.printStackTrace();
-//		 }
 		 
 		 
 		if (Principal.isGravidade()){
@@ -409,6 +405,7 @@ public class Tetris extends JPanel implements ActionListener {
 	public static void setNumColunasElim(int numColunasElim) {
 		Tetris.numColunasElim = numColunasElim;
 	}
+	//limpa a matriz e seta as variáveis para o estado inicial
 	public static void reset(){
 		for (int i = INICIO_LINHA; i <= FIM_LINHA; i++) {
 			for (int j = INICIO_COLUNA; j <= FIM_COLUNA; j++) {
